@@ -8,35 +8,33 @@ class Joc
 {
 	// DEFINICIO: La classe joc gestiona els torns, els jugadors i els altres elements del joc
 	// INVARIABLE:
-public:
-	// CONSTRUCTORS
-	Joc();
-	// Pre: --; Post: crea un joc buit
-	Joc(int llavor, int n_jugadors, string* nom_jugadors);
-	// Pre: --; Post: crea un joc amb la llavor, el nombre de jugadors i els seus noms
 
-	// METODES CONSULTORS
-	void mostrar_resultat_final() const;
-	// Pre: --; Post: mostra per pantalla el resultat de la partida
-	void debug_mostrar_estat() const;
+	public:
+		// CONSTRUCTORS
+		Joc();
+		Joc(int llavor, int n_jugadors, string* nom_jugadors);
 
-	// METODES MODIFICADORS
-	void inicialitzar_partida();
-	// Pre: --; Post: les fitxes estan distribuides pel tauler i a dins del dispensador
+		// METODES CONSULTORS
+		void mostrar_resultat_final() const;
+		void debug_mostrar_estat() const;
 
-private:
-	// ATRIBUTS
-	Bossa a_bossa;
-	Dispensador a_dispensador;
-	Tauler a_tauler;
+		// METODES MODIFICADORS
+		void inicialitzar_partida();
 
-	int a_n_jugadors;
-	Jugador* a_taula_jugadors;
+	private:
+		// ATRIBUTS
+		Bossa a_bossa;
+		Dispensador a_dispensador;
+		Tauler a_tauler;
 
-	// METODES PRIVATS
-	void buidar_senders();
-	void emplenar_dispensador();
-	void emplenar_tauler();
-	void emplenar_nivell(int inici, int final);
+		int a_n_jugadors;
+		int a_estaico;
+		Jugador* a_taula_jugadors;
+
+		// METODES PRIVATS
+		void buidar_senders();
+		void emplenar_dispensador();
+		void emplenar_tauler();
+		void emplenar_nivell(int inici, int final);
 };
 #endif // !JOC_H

@@ -10,6 +10,7 @@ Joc::Joc()
 	a_tauler = Tauler();
 
 	a_n_jugadors = 0;
+	a_estaico = 1;
 	a_taula_jugadors = NULL;
 }
 Joc::Joc(int llavor, int n_jugadors, string* noms)
@@ -19,6 +20,7 @@ Joc::Joc(int llavor, int n_jugadors, string* noms)
 	a_tauler = Tauler();
 
 	a_n_jugadors = n_jugadors;
+	a_estaico = 1;
 	a_taula_jugadors = new Jugador[a_n_jugadors];
 
 	for (int i = 0; i < a_n_jugadors; i++)
