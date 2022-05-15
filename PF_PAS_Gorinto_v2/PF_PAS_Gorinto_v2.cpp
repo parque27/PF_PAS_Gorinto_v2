@@ -117,6 +117,9 @@ int main()
 
 	Joc joc(llavor, n_jugadors, nom_jugadors);
 	joc.inicialitzar_partida();
-	joc.mostrar_estat_actual();
+	
+	// LA PARTIDA POT INICIAR
+
+
 	return 0;
 }

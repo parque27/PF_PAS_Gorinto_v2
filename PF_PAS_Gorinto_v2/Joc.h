@@ -18,13 +18,11 @@ class Joc
 		void mostrar_estat_actual() const;
 		void mostrar_estat_jugadors() const;
 		void mostrar_resultat_final() const;
-		bool es_final_partida(char opcio) const;
+		bool es_final_partida() const;
 
 		// METODES MODIFICADORS
 		void inicialitzar_partida();
 		void canvi_estacio();
-		// Pre: --; Post: incrementa l'estacio i reinicia els senders
-
 		void incrementa_torn();
 		void fer_jugada();
 		void intercanvi_gorinto_amb_sender();

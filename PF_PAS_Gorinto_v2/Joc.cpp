@@ -44,12 +44,37 @@ void Joc::mostrar_estat_jugadors() const
 	for (int i = 0; i < a_n_jugadors; i++)
 		a_taula_jugadors[i].mostrar();
 }
+void Joc::mostrar_resultat_final() const
+{
+
+}
+bool Joc::es_final_partida() const
+{
+
+}
+
 // METODES MODIFICADORS
 void Joc::inicialitzar_partida()
 {
 	a_bossa.barrejar();
 	emplenar_dispensador();
 	emplenar_tauler();
+}
+void Joc::canvi_estacio()
+{
+
+}
+void Joc::incrementa_torn()
+{
+
+}
+void Joc::fer_jugada()
+{
+
+}
+void Joc::intercanvi_gorinto_amb_sender()
+{
+
 }
 
 // METODES PRIVATS
