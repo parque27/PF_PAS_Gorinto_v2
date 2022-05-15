@@ -102,7 +102,8 @@ void mostrar_menu()
 	// Pre: --;
 	// Post: mostra el menu per pantalla
 	cout << endl << "OPCIONS:" << endl;
-	cout << "(J) FER JUGADA" << endl;
+	cout << "(I) FER JUGADA AMB INTERCANVI PREVI" << endl;
+	cout << "(J) FER JUGADA SENSE INTERCANVI PREVI" << endl;
 	cout << "(D) MOSTRAR DISPENSADOR" << endl;
 	cout << "(P) MOSTRAR UNA PILA DE LA MUNTANYA" << endl;
 	cout << "(F) ABANDONAR LA PARTIDA" << endl;
@@ -118,6 +119,7 @@ int main()
 	Joc joc(llavor, n_jugadors, nom_jugadors);
 	joc.inicialitzar_partida();
 	
+	mostrar_menu();
 	// LA PARTIDA POT INICIAR
 
 

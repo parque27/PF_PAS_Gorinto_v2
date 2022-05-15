@@ -50,7 +50,8 @@ void Joc::mostrar_resultat_final() const
 }
 bool Joc::es_final_partida() const
 {
-
+	bool es_final = false;
+	return es_final;
 }
 
 // METODES MODIFICADORS
