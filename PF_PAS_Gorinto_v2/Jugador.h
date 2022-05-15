@@ -17,7 +17,7 @@ public:
 	bool operator >(const Jugador& j) const;
 
 	// METODES CONSULTORS
-	void mostrar();
+	void mostrar() const;
 	// Pre: --; Post: mostra la informacio del jugador per pantalla
 
 	// METODES MODIFICADORS

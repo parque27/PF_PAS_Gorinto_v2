@@ -15,11 +15,19 @@ class Joc
 		Joc(int llavor, int n_jugadors, string* nom_jugadors);
 
 		// METODES CONSULTORS
+		void mostrar_estat_actual() const;
+		void mostrar_estat_jugadors() const;
 		void mostrar_resultat_final() const;
-		void debug_mostrar_estat() const;
+		bool es_final_partida(char opcio) const;
 
 		// METODES MODIFICADORS
 		void inicialitzar_partida();
+		void canvi_estacio();
+		// Pre: --; Post: incrementa l'estacio i reinicia els senders
+
+		void incrementa_torn();
+		void fer_jugada();
+		void intercanvi_gorinto_amb_sender();
 
 	private:
 		// ATRIBUTS
@@ -28,8 +36,10 @@ class Joc
 		Tauler a_tauler;
 
 		int a_n_jugadors;
-		int a_estaico;
 		Jugador* a_taula_jugadors;
+
+		int a_estaico;
+		int a_torn;
 
 		// METODES PRIVATS
 		void buidar_senders();

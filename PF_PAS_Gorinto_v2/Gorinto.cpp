@@ -53,11 +53,16 @@ bool Gorinto::existeix(Fitxa f) const
 void Gorinto::mostrar() const
 {
 	Node* p = a_inici;
-	while (p != NULL)
+	if (p == NULL) cout << "NO HI HA CAP FITXA" << endl;
+	else 
 	{
-		p->f.mostra(); cout << "   ";
-		p = p->seg;
+		while (p != NULL)
+		{
+			p->f.mostra(); cout << "   ";
+			p = p->seg;
+		}
 	}
+	
 }
 int Gorinto::calcular_puntuacio() const
 {

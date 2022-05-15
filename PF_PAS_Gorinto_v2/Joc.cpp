@@ -11,6 +11,7 @@ Joc::Joc()
 
 	a_n_jugadors = 0;
 	a_estaico = 1;
+	a_torn = 1;
 	a_taula_jugadors = NULL;
 }
 Joc::Joc(int llavor, int n_jugadors, string* noms)
@@ -21,24 +22,27 @@ Joc::Joc(int llavor, int n_jugadors, string* noms)
 
 	a_n_jugadors = n_jugadors;
 	a_estaico = 1;
+	a_torn = 1;
 	a_taula_jugadors = new Jugador[a_n_jugadors];
 
 	for (int i = 0; i < a_n_jugadors; i++)
-		a_taula_jugadors[i] = Jugador(noms[i], i);
+		a_taula_jugadors[i] = Jugador(noms[i], i+1);
 }
 
 // METODES CONSULTORS
-void Joc::debug_mostrar_estat() const
+void Joc::mostrar_estat_actual() const
 {
-	// Mostra les piles de fitxes
-	cout << "PILES:" << endl;
-	for (int i = 0; i < a_tauler.mida(); i++)
-		for (int j = 0; j < a_tauler.mida(); j++)
-			a_tauler.mostrar_pila(i, j);
-
-	// Mostra el tauler
-	cout << "TAULER:" << endl;
+	cout << endl << "TORN DE " << "<nom>" << endl <<
+		"====================" << endl;
+	cout << endl << "ESTAT DEL JOC - ESTACIO " << a_estaico << endl;
+	cout << endl << "TAULER" << endl;
 	a_tauler.mostrar();
+	mostrar_estat_jugadors();
+}
+void Joc::mostrar_estat_jugadors() const
+{
+	for (int i = 0; i < a_n_jugadors; i++)
+		a_taula_jugadors[i].mostrar();
 }
 // METODES MODIFICADORS
 void Joc::inicialitzar_partida()

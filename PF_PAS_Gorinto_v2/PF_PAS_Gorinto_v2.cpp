@@ -89,17 +89,14 @@ string* introduir_noms_jugadors(int n)
 	}
 	return noms;
 }
-char introduir_opcio()
+char demanar_opcio()
 {
 	// Pre: --;
 	// Post: retorna una opcio llegida de teclat
 	cout << endl << "ENTRAR OPCIO:" << endl;
 	char opcio; cin >> opcio;
 	if (opcio != 'I' or opcio != 'J' or opcio != 'D' or opcio != 'P' or opcio != 'F')
-	{
 		cout << "OPCIO NO DEFINIDA" << endl;
-		opcio = -1;
-	}
 	return opcio;
 }
 void mostrar_menu()
@@ -123,7 +120,6 @@ int main()
 	Joc joc(llavor, n_jugadors, nom_jugadors);
 	joc.inicialitzar_partida();
 
-	joc.debug_mostrar_estat();
-
+	joc.mostrar_estat_actual();
 	return 0;
 }
