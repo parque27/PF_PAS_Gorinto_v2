@@ -71,12 +71,10 @@ int introduir_n_jugadors()
 }
 void processar_jugadors(int n, Joc& joc)
 {
-	for (int i = 1; i <= n; i++)
+	for (int i = 0; i < n; i++)
 	{
-		cout << "ENTRA EL NOM DEL JUGADOR " << i << ":" << endl;
-		// getline
+		cout << "ENTRA EL NOM DEL JUGADOR " << i+1 << ":" << endl;
 		string nom; cin >> nom;
-
 	}
 }
 string* introduir_noms_jugadors(int n)
@@ -119,7 +117,6 @@ int main()
 
 	Joc joc(llavor, n_jugadors, nom_jugadors);
 	joc.inicialitzar_partida();
-
 	joc.mostrar_estat_actual();
 	return 0;
 }
