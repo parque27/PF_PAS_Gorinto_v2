@@ -6,7 +6,7 @@
     PAU ARQUEROS I SUREDA - u1972850
     GRAU EN ENGINYERIA INFORMATICA
     Universitat de Girona
-    2022
+    Curs 2021 - 2022
 */
 /*
     ENTRADA:
@@ -62,7 +62,7 @@ int introduir_n_jugadors()
 {
 	cout << "ENTRA EL NUMERO DE JUGADORS:" << endl;
 	int n; cin >> n;
-	while (n < 2 or n > 4)
+	while (n < 2 or n > 4) // TODO: Canviar a constants
 	{
 		cout << "ENTRA EL NUMERO DE JUGADORS:" << endl;
 		cin >> n;
