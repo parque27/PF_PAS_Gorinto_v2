@@ -18,6 +18,7 @@ public:
 	void mostrar_pila(int i, int j) const;
 	void posar_fitxa(int pos_i, int pos_j, Fitxa f);
 	void posar_sender(char tipus_sender, int pos, Fitxa f);
+	bool existeix_posicio(int i, int j) const;
 
 private:
 	int a_mida;

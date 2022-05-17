@@ -48,12 +48,22 @@ void Joc::mostrar_resultat_final() const
 {
 
 }
+void Joc::mostrar_dispensador() const
+{
+	a_dispensador.mostrar();
+}
 bool Joc::es_final_partida() const
 {
-	bool es_final = false;
-	return es_final;
+	return a_estaico == 4;
 }
-
+void Joc::mostrar_pila_muntanya(int pos_i, int pos_j) const
+{
+	a_tauler.mostrar_pila(pos_i, pos_j);
+}
+bool Joc::dades_valides(int pos_i, int pos_j) const
+{
+	return a_tauler.existeix_posicio(pos_i, pos_j);
+}
 // METODES MODIFICADORS
 void Joc::inicialitzar_partida()
 {
@@ -65,9 +75,13 @@ void Joc::canvi_estacio()
 {
 
 }
-void Joc::incrementa_torn()
+void Joc::incrementa_torn(char opcio)
 {
+	if (opcio == 'I' or opcio == 'J')
+	{
+		// CAL INCREMENTAR TORN
 
+	}
 }
 void Joc::fer_jugada()
 {

@@ -86,6 +86,10 @@ void Tauler::posar_sender(char tipus_sender, int posicio, Fitxa f)
 	if (tipus_sender == 'v') a_sender_v[posicio] = f;
 	else if (tipus_sender == 'h') a_sender_h[posicio] = f;
 }
+bool Tauler::existeix_posicio(int pos_i, int pos_j) const
+{
+	return pos_i >= 0 and pos_i <= a_mida and pos_j >= 0 and pos_j <= a_mida;
+}
 // METODES PRIVATS
 void Tauler::copia(const Tauler& o)
 {
