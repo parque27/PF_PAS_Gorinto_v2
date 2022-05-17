@@ -97,7 +97,7 @@ void Tauler::copia(const Tauler& o)
 	reserva();
 	for (int i = 0; i < a_mida; i++)
 		for (int j = 0; j < a_mida; j++)
-			a_muntanya[i][j] = o.a_muntanya[i][j]; // ?
+			a_muntanya[i][j] = o.a_muntanya[i][j];
 }
 void Tauler::reserva()
 {
