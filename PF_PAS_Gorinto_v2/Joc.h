@@ -40,7 +40,7 @@ class Joc
 		Tauler a_tauler;
 
 		int a_n_jugadors;
-		Jugador* p;
+		Jugador* a_jugador_actual;
 		Jugador* a_taula_jugadors;
 
 		int a_estaico;
@@ -50,6 +50,7 @@ class Joc
 		void buidar_senders();
 		void emplenar_dispensador();
 		void emplenar_tauler();
+		void emplenar_sender(char tipus_sender);
 		void emplenar_nivell(int inici, int final);
 };
 #endif // !JOC_H

@@ -13,13 +13,20 @@ public:
 
 	Tauler& operator=(const Tauler& o);
 
+	// METODES ENTERS
 	int mida() const;
 	int recompte_fitxes_sender() const;
+	// METODES MOSTRATIUS
 	void mostrar() const;
 	void mostrar_pila(int i, int j) const;
-	void posar_fitxa(int pos_i, int pos_j, Fitxa f);
-	void posar_sender(char tipus_sender, int pos, Fitxa f);
+	// METODES BOOLEANS
 	bool existeix_posicio(int i, int j) const;
+
+	// METODES MODIFICADORS
+	void posar_fitxa(int pos_i, int pos_j, Fitxa f);
+	Fitxa treure_fitxa_sender(char tipus_sender, int pos_i);
+	void posar_sender(char tipus_sender, int pos, Fitxa f);
+	void allibera_sender(char tipus_sender);
 
 private:
 	int a_mida;

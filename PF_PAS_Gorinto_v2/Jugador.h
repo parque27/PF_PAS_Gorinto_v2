@@ -19,6 +19,10 @@ public:
 	// METODES CONSULTORS
 	void mostrar() const;
 	// Pre: --; Post: mostra la informacio del jugador per pantalla
+	int ordre() const;
+	// Pre: --; Post: mostra l'ordre del jugador.
+	string nom() const;
+	// Pre: --; Post: 
 
 	// METODES MODIFICADORS
 	void treure_fitxa();

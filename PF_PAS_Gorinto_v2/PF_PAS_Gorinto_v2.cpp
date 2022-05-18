@@ -111,6 +111,7 @@ void mostrar_menu()
 	cout << "(J) FER JUGADA SENSE INTERCANVI PREVI" << endl;
 	cout << "(D) MOSTRAR DISPENSADOR" << endl;
 	cout << "(P) MOSTRAR UNA PILA DE LA MUNTANYA" << endl;
+	cout << "[DEBUG] (T) INCREMENTAR TORN" << endl;
 	cout << "(F) ABANDONAR LA PARTIDA" << endl;
 }
 // OPCIO I
@@ -167,8 +168,7 @@ int main()
 		else if (opcio == 'J') jugada_sense_intercanvi(joc);
 		else if (opcio == 'D') joc.mostrar_dispensador();
 		else if (opcio == 'P') mostrar_pila_muntanya(joc);
-
-		joc.incrementa_torn(opcio);
+		else if (opcio == 'T') joc.incrementa_torn(opcio);
 
 		mostrar_menu();
 		joc.mostrar_estat_actual();

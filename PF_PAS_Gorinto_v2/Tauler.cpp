@@ -90,6 +90,14 @@ void Tauler::posar_fitxa(int pos_i, int pos_j, Fitxa f)
 {
 	a_muntanya[pos_i][pos_j].empila(f);
 }
+Fitxa Tauler::treure_fitxa_sender(char tipus_sender, int pos_i)
+{
+	Fitxa fitxa_a_treure;
+	if (tipus_sender == 'v' and not a_sender_v[pos_i].es_nula()) a_sender_v[pos_i] = fitxa_a_treure;
+	else if (tipus_sender == 'h' and not a_sender_h[pos_i].es_nula()) a_sender_h[pos_i] = fitxa_a_treure;
+
+	return fitxa_a_treure;
+}
 void Tauler::posar_sender(char tipus_sender, int posicio, Fitxa f)
 {
 	if (tipus_sender == 'v') a_sender_v[posicio] = f;
@@ -120,4 +128,9 @@ void Tauler::allibera()
 {
 	for (int i = 0; i < a_mida; i++) delete[] a_muntanya[i];
 	delete[] a_muntanya;
+}
+void Tauler::allibera_sender(char tipus_sender)
+{
+	if (tipus_sender == 'h') delete[] a_sender_h;
+	else if (tipus_sender == 'v') delete[] a_sender_v;
 }

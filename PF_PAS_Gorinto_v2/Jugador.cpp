@@ -35,3 +35,13 @@ void Jugador::mostrar() const
 	cout << "PUNTS DE SAVIESA: " << a_punts << endl;
 	cout << "GORINTO: "; a_gorinto.mostrar();
 }
+
+int Jugador::ordre() const
+{
+	return this->a_ordre;
+}
+
+string Jugador::nom() const
+{
+	return this->a_nom;
+}
