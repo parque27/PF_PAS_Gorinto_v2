@@ -10,8 +10,8 @@ Joc::Joc()
 	a_tauler = Tauler();
 
 	a_n_jugadors = 0;
-	a_estaico = 1;
-	a_torn = 1;
+	a_estaico = 0;
+	a_torn = 0;
 	a_taula_jugadors = NULL;
 }
 Joc::Joc(int llavor, int n_jugadors, string* noms)
@@ -21,8 +21,8 @@ Joc::Joc(int llavor, int n_jugadors, string* noms)
 	a_tauler = Tauler();
 
 	a_n_jugadors = n_jugadors;
-	a_estaico = 1;
-	a_torn = 1;
+	a_estaico = 0;
+	a_torn = 0;
 	a_taula_jugadors = new Jugador[a_n_jugadors];
 
 	for (int i = 0; i < a_n_jugadors; i++)
@@ -34,9 +34,10 @@ Joc::Joc(int llavor, int n_jugadors, string* noms)
 // METODES QUE MOSTREN
 void Joc::mostrar_estat_actual() const
 {
-	cout << endl << "TORN DE " << a_jugador_actual << endl <<
+	cout << endl << "TORN DE " << a_jugador_actual->nom() << endl <<
 		"====================" << endl;
 	cout << endl << "ESTAT DEL JOC - ESTACIO " << a_estaico << endl;
+	cout << "[DEBUG] TORN " << a_torn << endl;
 	cout << endl << "TAULER" << endl;
 	a_tauler.mostrar();
 	mostrar_estat_jugadors();
@@ -58,15 +59,27 @@ void Joc::mostrar_pila_muntanya(int pos_i, int pos_j) const
 {
 	a_tauler.mostrar_pila(pos_i, pos_j);
 }
-
+int Joc::torns_jugats() const
+{
+	return this->a_torn;
+}
+int Joc::estacions() const
+{
+	return this->a_estaico;
+}
 // METODES BOOLEANS
 bool Joc::es_final_partida() const
 {
-	return a_estaico == 4 and es_final_estacio();
+	char opcio = 'a'; //DEBUG
+	return a_estaico == 4 and es_final_estacio(opcio);
 }
-bool Joc::es_final_estacio() const
+bool Joc::es_final_estacio(char opcio) const
 {
-	return a_tauler.recompte_fitxes_sender() < a_n_jugadors;
+	// DEBUG
+	// a_tauler.recompte_fitxes_sender() < a_n_jugadors;
+	bool final = false;
+	if (opcio == 'T') final = true;
+	return final;
 }
 bool Joc::dades_valides(int pos_i, int pos_j) const
 {
@@ -79,6 +92,7 @@ void Joc::inicialitzar_partida()
 	a_bossa.barrejar();
 	emplenar_dispensador();
 	emplenar_tauler();
+	a_jugador_actual = a_taula_jugadors;
 }
 void Joc::canvi_estacio()
 {
@@ -92,6 +106,7 @@ void Joc::canvi_estacio()
 }
 void Joc::incrementa_torn(char opcio)
 {
+	// [DEBUG] Opcio 'T'
 	if (opcio == 'I' or opcio == 'J')
 	{
 		a_torn++;
@@ -99,13 +114,12 @@ void Joc::incrementa_torn(char opcio)
 			a_jugador_actual = a_taula_jugadors;
 		else a_jugador_actual++;
 
-		if (es_final_estacio())
+		if (es_final_estacio(opcio))
 			if (es_final_partida()) mostrar_resultat_final();
 			else canvi_estacio();
-		// Seguim a la mateixa estacio
 	}
 }
-void Joc::fer_jugada()
+void Joc::posar_fitxa_muntanya()
 {
 
 }

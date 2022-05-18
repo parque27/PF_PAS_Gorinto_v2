@@ -20,17 +20,19 @@ class Joc
 		void mostrar_resultat_final() const;
 		void mostrar_dispensador() const;
 		void mostrar_pila_muntanya(int pos_i, int pos_j) const;
+		int torns_jugats() const;
+		int estacions() const;
 
 		// COMPROVACIO DE COSES
 		bool es_final_partida() const;
-		bool es_final_estacio() const;
+		bool es_final_estacio(char opcio) const; // opcio ES DEBUG
 		bool dades_valides(int pos_i, int pos_j) const;
 
 		// METODES MODIFICADORS
 		void inicialitzar_partida();
 		void canvi_estacio();
 		void incrementa_torn(char opcio);
-		void fer_jugada();
+		void posar_fitxa_muntanya();
 		void intercanvi_gorinto_amb_sender();
 
 	private:

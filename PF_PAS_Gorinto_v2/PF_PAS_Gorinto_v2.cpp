@@ -71,37 +71,20 @@ int introduir_n_jugadors()
 	}
 	return n;
 }
-void processar_jugadors(int n, Joc& joc)
-{
-	for (int i = 0; i < n; i++)
-	{
-		cout << "ENTRA EL NOM DEL JUGADOR " << i+1 << ":" << endl;
-		string nom; cin >> nom;
-	}
-}
 string* introduir_noms_jugadors(int n)
 {
 	string* noms = new string[n];
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
 	for (int i = 0; i < n; i++)
 	{
-		cout << "Nom del jugador " << i + 1 << endl;
-		cin >> noms[i];
+		string nom;
+		cout << "ENTRA EL NOM DEL JUGADOR " << i+1 << ":" << endl;
+		getline(cin, nom);
+		noms[i] = nom;
 	}
 	return noms;
 }
-char demanar_opcio()
-{
-	// Pre: --;
-	// Post: retorna una opcio llegida de teclat
-	cout << endl << "ENTRAR OPCIO:" << endl;
-	char opcio; cin >> opcio;
-	if (opcio != 'P')
-	{
-		cout << "OPCIO NO DEFINIDA" << endl;
-		opcio = 'R';
-	}
-	return opcio;
-}
+
 void mostrar_menu()
 {
 	// Pre: --;
@@ -111,7 +94,6 @@ void mostrar_menu()
 	cout << "(J) FER JUGADA SENSE INTERCANVI PREVI" << endl;
 	cout << "(D) MOSTRAR DISPENSADOR" << endl;
 	cout << "(P) MOSTRAR UNA PILA DE LA MUNTANYA" << endl;
-	cout << "[DEBUG] (T) INCREMENTAR TORN" << endl;
 	cout << "(F) ABANDONAR LA PARTIDA" << endl;
 }
 // OPCIO I
@@ -123,7 +105,19 @@ void jugada_amb_intercanvi(Joc& joc)
 // OPCIO J
 void jugada_sense_intercanvi(Joc& joc)
 {
+	cout << "DADES DE LA JUGADA QUE VOLS FER:" << endl;
+	cout << "SENDER DEL QUAL VOLS AGAFAR LA FITXA:" << endl;
+	char sender; cin >> sender; // COMPROVAR SENDER H O V
+	cout << "POSICIO DE LA FITXA EN EL SENDER:" << endl;
+	int pos_fitxa_sender; cin >> pos_fitxa_sender; // COMPROVAR POS -> RANG MAT I TAULA
+	cout << "POSICIO DE LA MUNTANYA ON VOLS DEIXAR UNA FITXA:" << endl;
+	int pos_i_deixar, pos_j_deixar; cin >> pos_i_deixar >> pos_j_deixar; // COMPROVAR POS -> RANG MAT I TAULA
+	cout << "POSICIO DE LA MUNTANYA ON VOLS AGAFAR UNA FITXA:" << endl;
+	int pos_i_agafar, pos_j_agafar; cin >> pos_i_agafar >> pos_j_agafar; // COMPROVAR POS -> RANG MAT I TAULA
+	// TODO: ACABAR COMPROVACIONS
 
+	
+	// Final de jugada: la fitxa es al gorinto del jugador actual
 }
 
 // OPCIO D IMLEMENTADA DIRECTAMENT
@@ -145,7 +139,19 @@ void mostrar_pila_muntanya(const Joc& joc)
 	comprovar_dades(pos_i, pos_j, joc);
 	joc.mostrar_pila_muntanya(pos_i, pos_j);
 }
-
+bool validar_opcio(const char o)
+{
+	return o == 'I' or o == 'J' or o == 'D' or o == 'P' or o == 'F' or o == 'T';
+}
+char demanar_opcio()
+{
+	// Pre: --;
+	// Post: retorna una opcio llegida de teclat
+	cout << endl << "ENTRAR OPCIO:" << endl;
+	char opcio; cin >> opcio;
+	if (not validar_opcio(opcio)) cout << "OPCIO NO DEFINIDA" << endl;
+	return opcio;
+}
 // MAIN
 int main()
 {
@@ -168,15 +174,15 @@ int main()
 		else if (opcio == 'J') jugada_sense_intercanvi(joc);
 		else if (opcio == 'D') joc.mostrar_dispensador();
 		else if (opcio == 'P') mostrar_pila_muntanya(joc);
-		else if (opcio == 'T') joc.incrementa_torn(opcio);
-
+		joc.incrementa_torn(opcio);
 		mostrar_menu();
 		joc.mostrar_estat_actual();
-		char opcio = demanar_opcio();
+
+		opcio = demanar_opcio();
 	}
 
 	// TRACTEM EL FINAL DE LA PARTIDA
-	if (opcio == 'F') cout << "ABANDONAMENT" << endl;
-	else if (joc.es_final_partida()) cout << "FINAL NATURAL" << endl;
+	if (opcio == 'F') cout << endl << "PARTIDA ABANDONADA DESPRES DE " << joc.estacions() << " ESTACIONS I " << joc.torns_jugats() << " TORNS" << endl;
+	else if (joc.es_final_partida()) joc.mostrar_resultat_final();
 	return 0;
 }
