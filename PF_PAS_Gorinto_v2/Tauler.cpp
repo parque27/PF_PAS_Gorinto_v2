@@ -41,6 +41,15 @@ Tauler& Tauler::operator=(const Tauler& o)
 }
 
 // METODES PUBLICS
+int Tauler::recompte_fitxes_sender() const
+{
+	int recompte = 0;
+	for (int i = 0; i < a_mida; i++)
+		if (not a_sender_h->es_nula()) recompte++;
+	for (int i = 0; i < a_mida; i++)
+		if (not a_sender_v->es_nula()) recompte++;
+	return recompte;
+}
 int Tauler::mida() const
 {
 	return a_mida;

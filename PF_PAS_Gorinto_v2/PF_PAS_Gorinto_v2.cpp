@@ -14,6 +14,8 @@
 */
 
 #include <iostream>
+#include <limits>
+#include <iomanip>
 #include "Joc.h"
 using namespace std;
 

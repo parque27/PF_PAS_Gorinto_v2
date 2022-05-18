@@ -56,6 +56,10 @@ bool Joc::es_final_partida() const
 {
 	return a_estaico == 4;
 }
+bool Joc::es_final_estacio() const
+{
+	return a_tauler.recompte_fitxes_sender() < a_n_jugadors;
+}
 void Joc::mostrar_pila_muntanya(int pos_i, int pos_j) const
 {
 	a_tauler.mostrar_pila(pos_i, pos_j);

@@ -23,6 +23,7 @@ class Joc
 
 		// COMPROVACIO DE COSES
 		bool es_final_partida() const;
+		bool es_final_estacio() const;
 		bool dades_valides(int pos_i, int pos_j) const;
 
 		// METODES MODIFICADORS

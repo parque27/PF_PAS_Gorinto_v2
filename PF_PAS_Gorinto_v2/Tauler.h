@@ -14,6 +14,7 @@ public:
 	Tauler& operator=(const Tauler& o);
 
 	int mida() const;
+	int recompte_fitxes_sender() const;
 	void mostrar() const;
 	void mostrar_pila(int i, int j) const;
 	void posar_fitxa(int pos_i, int pos_j, Fitxa f);
