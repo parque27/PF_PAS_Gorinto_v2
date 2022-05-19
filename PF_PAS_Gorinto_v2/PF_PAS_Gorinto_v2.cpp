@@ -101,30 +101,51 @@ void jugada_amb_intercanvi(Joc& joc)
 {
 
 }
-
 // OPCIO J
 void jugada_sense_intercanvi(Joc& joc)
 {
 	cout << "DADES DE LA JUGADA QUE VOLS FER:" << endl;
 	cout << "SENDER DEL QUAL VOLS AGAFAR LA FITXA:" << endl;
-	char sender; cin >> sender; // COMPROVAR SENDER H O V
+	char sender; cin >> sender; 
+	while (not joc.validar_tipus_sender(sender))
+	{
+		cout << "SENDER NO VALID" << endl;
+		cout << "SENDER DEL QUAL VOLS AGAFAR LA FITXA:" << endl;
+		cin >> sender;
+	}
+
 	cout << "POSICIO DE LA FITXA EN EL SENDER:" << endl;
-	int pos_fitxa_sender; cin >> pos_fitxa_sender; // COMPROVAR POS -> RANG MAT I TAULA
+	int pos_fitxa_sender; cin >> pos_fitxa_sender; 
+	while (joc.validar_posicio_sender(pos_fitxa_sender))
+	{
+		cout << "POSICIO NO VALIDA" << endl;
+		cout << "POSICIO DE LA FITXA EN EL SENDER:" << endl;
+		cin >> pos_fitxa_sender;
+	}
+
 	cout << "POSICIO DE LA MUNTANYA ON VOLS DEIXAR UNA FITXA:" << endl;
-	int pos_i_deixar, pos_j_deixar; cin >> pos_i_deixar >> pos_j_deixar; // COMPROVAR POS -> RANG MAT I TAULA
+	int pos_i_deixar, pos_j_deixar; cin >> pos_i_deixar >> pos_j_deixar;
+	while (not joc.validar_posicions_muntanya(pos_i_deixar, pos_j_deixar))
+	{
+		cout << "POSICIO NO VALIDA" << endl;
+		cout << "POSICIO DE LA MUNTANYA ON VOLS DEIXAR UNA FITXA:" << endl;
+		cin >> pos_i_deixar >> pos_j_deixar;
+	}
 	cout << "POSICIO DE LA MUNTANYA ON VOLS AGAFAR UNA FITXA:" << endl;
 	int pos_i_agafar, pos_j_agafar; cin >> pos_i_agafar >> pos_j_agafar; // COMPROVAR POS -> RANG MAT I TAULA
-	// TODO: ACABAR COMPROVACIONS
-
-	
-	// Final de jugada: la fitxa es al gorinto del jugador actual
+	while (not joc.validar_posicions_muntanya(pos_i_agafar, pos_j_agafar) and pos_i_agafar != pos_i_deixar and pos_j_agafar != pos_j_deixar)
+	{
+		cout << "POSICIO NO VALIDA" << endl;
+		cout << "POSICIO DE LA MUNTANYA ON VOLS AGAFAR UNA FITXA:" << endl;
+		cin >> pos_i_agafar >> pos_j_agafar;
+	}
 }
 
 // OPCIO D IMLEMENTADA DIRECTAMENT
 // OPCIO P
 void comprovar_dades(int& i, int& j, const Joc& joc)
 {
-	bool dades_valides = joc.dades_valides(i, j);
+	bool dades_valides = joc.validar_posicions_muntanya(i, j);
 	while (not dades_valides)
 	{
 		cout << "POSICIO NO VALIDA" << endl;

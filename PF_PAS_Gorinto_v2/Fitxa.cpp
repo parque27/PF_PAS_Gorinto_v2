@@ -1,5 +1,6 @@
 #include "Fitxa.h"
 #include <iostream>
+#include <iomanip>
 using namespace std;
 
 // CONSTRUCTORS
@@ -43,9 +44,7 @@ void Fitxa::mostra() const
 	if (this->es_nula()) cout << "(   )" << endl;
 	else
 	{
-		cout << "(" << a_tipus;
-		if (a_valor <= 9) cout << 0;
-		cout << a_valor << ")";
+		cout << "(" << a_tipus << setw(2) << setfill('0') << a_valor << ")";
 	}
 }
 bool Fitxa::es_nula() const

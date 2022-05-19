@@ -81,9 +81,17 @@ bool Joc::es_final_estacio(char opcio) const
 	if (opcio == 'T') final = true;
 	return final;
 }
-bool Joc::dades_valides(int pos_i, int pos_j) const
+bool Joc::validar_posicions_muntanya(int pos_i, int pos_j) const
 {
-	return a_tauler.existeix_posicio(pos_i, pos_j);
+	return a_tauler.existeix_posicio_muntanya(pos_i, pos_j);
+}
+bool Joc::validar_posicio_sender(int pos_i) const
+{
+	return a_tauler.existeix_posicio_sender(pos_i);
+}
+bool Joc::validar_tipus_sender(char sender) const
+{
+	return sender == 'h' or sender == 'v';
 }
 
 // METODES MODIFICADORS

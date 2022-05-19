@@ -1,7 +1,7 @@
 #include "Bossa.h"
 #include <iostream>
 using namespace std;
-
+// CONSTANTS
 // CONSTRUCTORS
 // CONSTRUCTOR PER DEFECTE
 Bossa::Bossa()
@@ -66,7 +66,7 @@ void Bossa::afegir_fitxa(const Fitxa& f)
 }
 Fitxa Bossa::robar_fitxa()
 {
-	Fitxa f_robada = a_t[a_n - 1];
+	Fitxa f_robada = a_t[a_n - 1];	
 	a_n--;
 	return f_robada;
 }
@@ -82,7 +82,6 @@ void Bossa::omplir_bossa()
 {
 	for (int i = 0; i < MAX_FITXES; i++)
 	{
-
 		if (i < 20)
 		{
 			Fitxa f('a', i + 1);

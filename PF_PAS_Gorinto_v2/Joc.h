@@ -26,7 +26,10 @@ class Joc
 		// COMPROVACIO DE COSES
 		bool es_final_partida() const;
 		bool es_final_estacio(char opcio) const; // opcio ES DEBUG
-		bool dades_valides(int pos_i, int pos_j) const;
+		// VALIDACIO DE DADES
+		bool validar_posicions_muntanya(int pos_i, int pos_j) const;
+		bool validar_posicio_sender(int pos_i) const;
+		bool validar_tipus_sender(char sender) const;
 
 		// METODES MODIFICADORS
 		void inicialitzar_partida();

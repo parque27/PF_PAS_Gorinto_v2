@@ -20,7 +20,8 @@ public:
 	void mostrar() const;
 	void mostrar_pila(int i, int j) const;
 	// METODES BOOLEANS
-	bool existeix_posicio(int i, int j) const;
+	bool existeix_posicio_muntanya(int i, int j) const;
+	bool existeix_posicio_sender(int i) const;
 
 	// METODES MODIFICADORS
 	void posar_fitxa(int pos_i, int pos_j, Fitxa f);
