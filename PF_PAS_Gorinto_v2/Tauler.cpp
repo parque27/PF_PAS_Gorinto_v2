@@ -136,27 +136,33 @@ bool Tauler::es_valid_patro_seleccio(char sender, int pos_fitxa_sender, int pos_
 
 	if (sender == 'h')
 	{
-		if (a_sender_h[pos_fitxa_sender].tipus_element() == 'a')
-		{
-
-		}
+		if (a_sender_h[pos_fitxa_sender].tipus_element() == 'a') 
+			patro_seleccio_correcte = patro_seleccio_aigua(pos_i_deixar, pos_j_deixar, pos_i_agafar, pos_j_agafar);
+		else if (a_sender_h[pos_fitxa_sender].tipus_element() == 'e')
+			patro_seleccio_correcte = patro_seleccio_eter(pos_i_deixar, pos_j_deixar, pos_i_agafar, pos_j_agafar);
+		else if (a_sender_h[pos_fitxa_sender].tipus_element() == 'f')
+			patro_seleccio_correcte = patro_seleccio_foc(pos_i_deixar, pos_j_deixar, pos_i_agafar, pos_j_agafar);
+		else if (a_sender_h[pos_fitxa_sender].tipus_element() == 't')
+			patro_seleccio_correcte = patro_seleccio_terra(pos_i_deixar, pos_j_deixar, pos_i_agafar, pos_j_agafar);
+		else if (a_sender_h[pos_fitxa_sender].tipus_element() == 'v')
+			patro_seleccio_correcte = patro_seleccio_vent(pos_i_deixar, pos_j_deixar, pos_i_agafar, pos_j_agafar);
 	}
-	/*
-	else if (a_sender_h[pos_fitxa_sender].tipus_element() == 'e')
-	else if (a_sender_h[pos_fitxa_sender].tipus_element() == 'f')
-	else if (a_sender_h[pos_fitxa_sender].tipus_element() == 't')
-	else if (a_sender_h[pos_fitxa_sender].tipus_element() == 'v')
-}
-else
-{
-	if (a_sender_h[pos_fitxa_sender].tipus_element() == 'a')
-	else if (a_sender_v[pos_fitxa_sender].tipus_element() == 'e')
-	else if (a_sender_v[pos_fitxa_sender].tipus_element() == 'f')
-	else if (a_sender_v[pos_fitxa_sender].tipus_element() == 't')
-	else if (a_sender_v[pos_fitxa_sender].tipus_element() == 'v')
-}*/
+	else
+	{
+		if (a_sender_h[pos_fitxa_sender].tipus_element() == 'a')
+			patro_seleccio_correcte = patro_seleccio_aigua(pos_i_deixar, pos_j_deixar, pos_i_agafar, pos_j_agafar);
+		else if (a_sender_h[pos_fitxa_sender].tipus_element() == 'e')
+			patro_seleccio_correcte = patro_seleccio_eter(pos_i_deixar, pos_j_deixar, pos_i_agafar, pos_j_agafar);
+		else if (a_sender_h[pos_fitxa_sender].tipus_element() == 'f')
+			patro_seleccio_correcte = patro_seleccio_foc(pos_i_deixar, pos_j_deixar, pos_i_agafar, pos_j_agafar);
+		else if (a_sender_h[pos_fitxa_sender].tipus_element() == 't')
+			patro_seleccio_correcte = patro_seleccio_terra(pos_i_deixar, pos_j_deixar, pos_i_agafar, pos_j_agafar);
+		else if (a_sender_h[pos_fitxa_sender].tipus_element() == 'v')
+			patro_seleccio_correcte = patro_seleccio_vent(pos_i_deixar, pos_j_deixar, pos_i_agafar, pos_j_agafar);
+	}
 	return patro_seleccio_correcte;
 }
+// patrons de seleccio
 bool Tauler::patro_seleccio_aigua(int i, int j, int pos_i_agafar, int pos_j_agafar) const
 {
 	// pos on deixem: i,j
