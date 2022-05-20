@@ -45,3 +45,8 @@ string Jugador::nom() const
 {
 	return this->a_nom;
 }
+
+void Jugador::afegir_fitxa(Fitxa f)
+{
+	a_gorinto.inserir(f);
+}

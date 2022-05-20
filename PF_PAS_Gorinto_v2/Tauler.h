@@ -32,8 +32,10 @@ public:
 	bool coincideixen_sender_muntanya(char sender, int pos_sender, int pos_i_deixar, int pos_j_deixar) const;
 
 	// METODES MODIFICADORS
-	void posar_fitxa(int pos_i, int pos_j, Fitxa f);
-	Fitxa treure_fitxa_sender(char tipus_sender, int pos_i);
+	void empilar_fitxa_muntanya(int pos_i, int pos_j, Fitxa f);
+	Fitxa desempila_fitxa_muntanya(int pos_i, int pos_j);
+	void buida_fitxa_sender(char tipus_sender, int pos);
+	Fitxa fitxa_a_treure(char tipus_sender, int pos_i);
 	void posar_sender(char tipus_sender, int pos, Fitxa f);
 	void allibera_sender(char tipus_sender);
 

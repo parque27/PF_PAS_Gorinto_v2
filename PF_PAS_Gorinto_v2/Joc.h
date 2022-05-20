@@ -12,7 +12,7 @@ class Joc
 	public:
 		// CONSTRUCTORS
 		Joc();
-		Joc(int llavor, int n_jugadors, string* nom_jugadors);
+		Joc(unsigned& llavor, int n_jugadors, string* nom_jugadors);
 
 		// MOSTRAR ALGUNA COSA
 		void mostrar_estat_actual() const;
@@ -41,7 +41,7 @@ class Joc
 		void realitzar_jugada(char sender, int pos_fitxa_sender, int pos_i_deixar, int pos_j_deixar, int pos_i_agafar, int pos_j_agafar);
 	private:
 		// ATRIBUTS
-		Bossa a_bossa;
+		Bossa *a_bossa;
 		Dispensador a_dispensador;
 		Tauler a_tauler;
 

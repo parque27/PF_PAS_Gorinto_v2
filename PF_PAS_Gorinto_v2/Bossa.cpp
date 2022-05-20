@@ -1,7 +1,6 @@
 #include "Bossa.h"
 #include <iostream>
 using namespace std;
-// CONSTANTS
 // CONSTRUCTORS
 // CONSTRUCTOR PER DEFECTE
 Bossa::Bossa()

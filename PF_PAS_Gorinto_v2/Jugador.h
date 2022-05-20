@@ -26,7 +26,7 @@ public:
 
 	// METODES MODIFICADORS
 	void treure_fitxa();
-	void afegir_fitxa();
+	void afegir_fitxa(Fitxa f);
 
 private:
 	// CONSTANTS DE CLASSE

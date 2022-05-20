@@ -87,17 +87,27 @@ cout << setfill(' ') << setw(6) << i;
 		cout << endl;
 	}
 }
-void Tauler::posar_fitxa(int pos_i, int pos_j, Fitxa f)
+void Tauler::empilar_fitxa_muntanya(int pos_i, int pos_j, Fitxa f)
 {
 	a_muntanya[pos_i][pos_j].empila(f);
 }
-Fitxa Tauler::treure_fitxa_sender(char tipus_sender, int pos_i)
+Fitxa Tauler::desempila_fitxa_muntanya(int pos_i, int pos_j)
+{
+	Fitxa f = a_muntanya[pos_i][pos_j].cim();
+	a_muntanya[pos_i][pos_j].desempila();
+	return f;
+}
+Fitxa Tauler::fitxa_a_treure(char tipus_sender, int pos_i)
 {
 	Fitxa fitxa_a_treure;
-	if (tipus_sender == 'v' and not a_sender_v[pos_i].es_nula()) a_sender_v[pos_i] = fitxa_a_treure;
-	else if (tipus_sender == 'h' and not a_sender_h[pos_i].es_nula()) a_sender_h[pos_i] = fitxa_a_treure;
-
+	if (tipus_sender == 'v' and not a_sender_v[pos_i].es_nula()) fitxa_a_treure = a_sender_v[pos_i];
+	else if (tipus_sender == 'h' and not a_sender_h[pos_i].es_nula()) fitxa_a_treure = a_sender_h[pos_i];
 	return fitxa_a_treure;
+}
+void Tauler::buida_fitxa_sender(char tipus_sender, int posicio)
+{
+	if (tipus_sender == 'h') a_sender_h[posicio] = Fitxa(' ', 0);
+	else a_sender_v[posicio] = Fitxa(' ', 0);
 }
 void Tauler::posar_sender(char tipus_sender, int posicio, Fitxa f)
 {
@@ -159,7 +169,7 @@ bool Tauler::es_valid_patro_seleccio(char sender, int pos_fitxa_sender, int pos_
 	else if (tipus_fitxa == 'v') patro_seleccio_correcte = patro_seleccio_vent(pos_i_agafar, pos_j_agafar, pos_i_deixar, pos_j_deixar);
 	return patro_seleccio_correcte;
 }
-// patrons de seleccio
+
 bool Tauler::patro_seleccio_aigua(int pos_i_agafar, int pos_i_deixar, int distancia_j) const
 {
 	return pos_i_agafar == pos_i_deixar and (distancia_j == 1 or distancia_j == 2);

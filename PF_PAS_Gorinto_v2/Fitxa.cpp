@@ -41,11 +41,8 @@ bool Fitxa::operator>=(const Fitxa& f) const
 // METODES CONSULTORS
 void Fitxa::mostra() const
 {
-	if (this->es_nula()) cout << "(   )" << endl;
-	else
-	{
-		cout << "(" << a_tipus << setw(2) << setfill('0') << a_valor << ")";
-	}
+	if (this->es_nula()) cout << "(   )";
+	else cout << "(" << a_tipus << setw(2) << setfill('0') << a_valor << ")";
 }
 bool Fitxa::es_nula() const
 {

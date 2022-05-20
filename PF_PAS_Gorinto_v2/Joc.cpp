@@ -5,7 +5,7 @@ using namespace std;
 // CONSTRUCTORS
 Joc::Joc()
 {
-	a_bossa = Bossa();
+	a_bossa = new Bossa();
 	a_dispensador = Dispensador();
 	a_tauler = Tauler();
 
@@ -14,9 +14,9 @@ Joc::Joc()
 	a_torn = 0;
 	a_taula_jugadors = NULL;
 }
-Joc::Joc(int llavor, int n_jugadors, string* noms)
+Joc::Joc(unsigned& llavor, int n_jugadors, string* noms)
 {
-	a_bossa = Bossa(llavor);
+	a_bossa = new Bossa(llavor);
 	a_dispensador = Dispensador();
 	a_tauler = Tauler();
 
@@ -93,10 +93,11 @@ bool Joc::validar_jugada(char sender, int pos_fitxa_sender, int pos_i_deixar, in
 {
 	return a_tauler.es_jugada_valida(sender, pos_fitxa_sender, pos_i_deixar, pos_j_deixar, pos_i_agafar, pos_j_agafar);
 }
+
 // METODES MODIFICADORS
 void Joc::inicialitzar_partida()
 {
-	a_bossa.barrejar();
+	a_bossa->barrejar();
 	emplenar_dispensador();
 	emplenar_tauler();
 	a_jugador_actual = a_taula_jugadors;
@@ -135,26 +136,31 @@ void Joc::intercanvi_gorinto_amb_sender()
 {
 
 }
-
+void Joc::realitzar_jugada(char sender, int pos_fitxa_sender, int pos_i_deixar, int pos_j_deixar, int pos_i_agafar, int pos_j_agafar)
+{
+	a_tauler.empilar_fitxa_muntanya(pos_i_deixar, pos_j_deixar, a_tauler.fitxa_a_treure(sender, pos_fitxa_sender));
+	a_jugador_actual->afegir_fitxa(a_tauler.desempila_fitxa_muntanya(pos_i_agafar, pos_j_agafar));
+	a_tauler.buida_fitxa_sender(sender, pos_fitxa_sender);
+}
 // METODES PRIVATS
 void Joc::buidar_senders()
 {
 	for (int i = 0; i < a_tauler.mida(); i++)
 	{
-		a_dispensador.encua(a_tauler.treure_fitxa_sender('h', i));
+		a_dispensador.encua(a_tauler.fitxa_a_treure('h', i));
 		a_tauler.allibera_sender('h');	// NO FUNCA
 	}
 
 	for (int i = 0; i < a_tauler.mida(); i++)
 	{ 
-		a_dispensador.encua(a_tauler.treure_fitxa_sender('v', i));
+		a_dispensador.encua(a_tauler.fitxa_a_treure('v', i));
 		a_tauler.allibera_sender('v');	// NO FUNCA
 	}
 }
 void Joc::emplenar_dispensador()
 {
-	while (not a_bossa.es_buida())
-		a_dispensador.encua(a_bossa.robar_fitxa());
+	while (not a_bossa->es_buida())
+		a_dispensador.encua(a_bossa->robar_fitxa());
 }
 void Joc::emplenar_tauler()
 {
@@ -191,7 +197,7 @@ void Joc::emplenar_nivell(int inici, int final)
 	for (int i = inici; i < final; i++) 
 	{
 		for (int j = inici; j < final; j++) {
-			a_tauler.posar_fitxa(i, j, a_dispensador.primer());
+			a_tauler.empilar_fitxa_muntanya(i, j, a_dispensador.primer());
 			a_dispensador.desencua();
 		}
 	}
