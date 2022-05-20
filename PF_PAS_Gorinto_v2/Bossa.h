@@ -23,7 +23,7 @@ public:
 	void barrejar();
 
 private:
-	// CONSTANTS DE CLASSE
+	// CONSTANTS DE CLASSE	
 	const int MAX_FITXES = 100;
 	const int GENERADOR_A = 1103515245;
 	const int GENERADOR_C = 12345;

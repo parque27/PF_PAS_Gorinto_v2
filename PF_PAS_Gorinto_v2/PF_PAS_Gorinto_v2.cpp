@@ -21,10 +21,10 @@ using namespace std;
 
 // ------------------------ ACCIONS I FUNCIONS ------------------------- 
 // INTRODUCCIO DE PARAMETRES PER PREPARAR LA PARTIDA
-int introduir_llavor()
+unsigned introduir_llavor()
 {
 	cout << "ENTRA LA LLAVOR:" << endl;
-	int llavor; cin >> llavor;
+	unsigned llavor; cin >> llavor;
 	return llavor;
 }
 int introduir_n_jugadors()
@@ -51,12 +51,10 @@ string* introduir_noms_jugadors(int n)
 	}
 	return noms;
 }
-
 void jugada_amb_intercanvi(Joc& joc)
 {
 
 }
-
 char introduir_sender(const Joc& joc)
 {
 	// Pre:
@@ -78,13 +76,20 @@ int introduir_pos_sender(const Joc& joc)
 	// Post:
 	cout << "POSICIO DE LA FITXA EN EL SENDER:" << endl;
 	int pos_fitxa_sender; cin >> pos_fitxa_sender;
-	while (joc.validar_posicio_sender(pos_fitxa_sender))
+	while (not joc.validar_posicio_sender(pos_fitxa_sender))
 	{
 		cout << "POSICIO NO VALIDA" << endl;
 		cout << "POSICIO DE LA FITXA EN EL SENDER:" << endl;
 		cin >> pos_fitxa_sender;
 	}
 	return pos_fitxa_sender;
+}
+void debug_mostrar_dades_jugada(char sender, int pos_fitxa_sender, int pos_i_deixar, int pos_j_deixar, int pos_i_agafar, int pos_j_agafar)
+{
+	cout << "SENDER: [" << sender << "]" << endl;
+	cout << "POSICIO SENDER: [" << pos_fitxa_sender << "]" << endl;
+	cout << "FITXA QUE DEIXEM: " << pos_i_deixar << "," << pos_j_deixar << endl;
+	cout << "FITXA QUE AGAFEM: " << pos_i_agafar << "," << pos_j_agafar << endl;
 }
 void introduir_posicio_muntanya_deixar(const Joc& joc, int& pos_i_deixar, int& pos_j_deixar)
 {
@@ -112,7 +117,6 @@ void introduir_posicio_muntanya_agafar(const Joc& joc, int& pos_i_agafar, int& p
 		cin >> pos_i_agafar >> pos_j_agafar;
 	}
 }
-
 void jugada_sense_intercanvi(Joc& joc)
 {
 	// INTRODUCCIO I VALIDACIO DE DADES
@@ -122,12 +126,17 @@ void jugada_sense_intercanvi(Joc& joc)
 	int pos_i_agafar, pos_j_agafar;
 	introduir_posicio_muntanya_deixar(joc, pos_i_deixar, pos_j_deixar);
 	introduir_posicio_muntanya_agafar(joc, pos_i_agafar, pos_j_agafar, pos_i_deixar, pos_j_deixar);
-	// VALIDACIO DE JUGADA
 
-	/*if (not jugada_valida))	cout << "JUGADA NO PERMESA" << endl;
-	else joc.realitzar_jugada(sender, pos_fitxa_sender, pos_i_deixar, pos_j_deixar, pos_i_agafar, pos_j_agafar);*/
+	while (not(joc.validar_jugada(sender, pos_fitxa_sender, pos_i_deixar, pos_j_deixar, pos_i_agafar, pos_j_agafar)))
+	{
+		cout << "JUGADA NO PERMESA" << endl;
+		char sender = introduir_sender(joc);
+		int pos_fitxa_sender = introduir_pos_sender(joc);
+		introduir_posicio_muntanya_deixar(joc, pos_i_deixar, pos_j_deixar);
+		introduir_posicio_muntanya_agafar(joc, pos_i_agafar, pos_j_agafar, pos_i_deixar, pos_j_deixar);
+	}
+	joc.realitzar_jugada(sender, pos_fitxa_sender, pos_i_deixar, pos_j_deixar, pos_i_agafar, pos_j_agafar);
 }
-
 void comprovar_dades(int& i, int& j, const Joc& joc)
 {
 	bool dades_valides = joc.validar_posicions_muntanya(i, j);
@@ -173,19 +182,14 @@ void mostrar_menu()
 
 int main()
 {
-	// INCIALITZEM LES VARIABLES
-	int llavor = introduir_llavor();
+	unsigned llavor = introduir_llavor();
 	int n_jugadors = introduir_n_jugadors();
 	string* nom_jugadors = introduir_noms_jugadors(n_jugadors);
 	Joc joc(llavor, n_jugadors, nom_jugadors);
-
-	// INICIALTZEM LA PARTIDA
 	joc.inicialitzar_partida();
 	mostrar_menu();
 	joc.mostrar_estat_actual();
 	char opcio = demanar_opcio();
-
-	// BUCLE DE JOC
 	while (opcio != 'F' and not joc.es_final_partida())
 	{
 		if (opcio == 'I') jugada_amb_intercanvi(joc);
@@ -195,11 +199,8 @@ int main()
 		joc.incrementa_torn(opcio);
 		mostrar_menu();
 		joc.mostrar_estat_actual();
-
 		opcio = demanar_opcio();
 	}
-
-	// TRACTEM EL FINAL DE LA PARTIDA
 	if (opcio == 'F') cout << endl << "PARTIDA ABANDONADA DESPRES DE " << joc.estacions() << " ESTACIONS I " << joc.torns_jugats() << " TORNS" << endl;
 	else if (joc.es_final_partida()) joc.mostrar_resultat_final();
 	return 0;

@@ -36,8 +36,8 @@ void Joc::mostrar_estat_actual() const
 {
 	cout << endl << "TORN DE " << a_jugador_actual->nom() << endl <<
 		"====================" << endl;
-	cout << endl << "ESTAT DEL JOC - ESTACIO " << a_estaico << endl;
-	cout << "[DEBUG] TORN " << a_torn << endl;
+	cout << endl << "ESTAT DEL JOC - ESTACIO " << a_estaico+1 << endl;
+	cout << "[DEBUG] TORN " << a_torn+1 << endl;
 	cout << endl << "TAULER" << endl;
 	a_tauler.mostrar();
 	mostrar_estat_jugadors();
@@ -71,16 +71,11 @@ int Joc::estacions() const
 // METODES BOOLEANS
 bool Joc::es_final_partida() const
 {
-	char opcio = 'a'; //DEBUG
-	return a_estaico == 4 and es_final_estacio(opcio);
+	return a_estaico == 4 and es_final_estacio();
 }
-bool Joc::es_final_estacio(char opcio) const
+bool Joc::es_final_estacio() const
 {
-	// DEBUG
-	// a_tauler.recompte_fitxes_sender() < a_n_jugadors;
-	bool final = false;
-	if (opcio == 'T') final = true;
-	return final;
+	return a_tauler.recompte_fitxes_sender() < a_n_jugadors;
 }
 bool Joc::validar_posicions_muntanya(int pos_i, int pos_j) const
 {
@@ -94,7 +89,10 @@ bool Joc::validar_tipus_sender(char sender) const
 {
 	return sender == 'h' or sender == 'v';
 }
-
+bool Joc::validar_jugada(char sender, int pos_fitxa_sender, int pos_i_deixar, int pos_j_deixar, int pos_i_agafar, int pos_j_agafar) const
+{
+	return a_tauler.es_jugada_valida(sender, pos_fitxa_sender, pos_i_deixar, pos_j_deixar, pos_i_agafar, pos_j_agafar);
+}
 // METODES MODIFICADORS
 void Joc::inicialitzar_partida()
 {
@@ -118,14 +116,15 @@ void Joc::incrementa_torn(char opcio)
 	// [DEBUG] Opcio 'T'
 	if (opcio == 'I' or opcio == 'J')
 	{
+		// REVISAR QUE NO CANVII DE JUGADOR QUAN ES CANVIA L'ESTACIO
 		a_torn++;
 		if (a_jugador_actual->ordre() == a_n_jugadors)
 			a_jugador_actual = a_taula_jugadors;
 		else a_jugador_actual++;
 
-		if (es_final_estacio(opcio))
+		/*if (es_final_estacio())
 			if (es_final_partida()) mostrar_resultat_final();
-			else canvi_estacio();
+			else canvi_estacio();*/
 	}
 }
 void Joc::posar_fitxa_muntanya()

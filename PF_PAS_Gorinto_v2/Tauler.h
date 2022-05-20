@@ -46,12 +46,14 @@ private:
 	void copia(const Tauler& o);
 	void reserva();
 	void allibera();
+	// CANVIADES
+	bool patro_seleccio_aigua(int pos_i_deixar, int pos_i_agafar, int distancia_j) const;
+	bool patro_seleccio_foc(int pos_j_deixar, int pos_j_agafar, int distancia_i) const;
 
-	bool patro_seleccio_aigua(int pos_i_deixar, int pos_j_deixar, int i, int j) const;
-	bool patro_seleccio_vent(int pos_i_deixar, int pos_j_deixar, int i, int j) const;
-	bool patro_seleccio_foc(int pos_i_deixar, int pos_j_deixar, int i, int j) const;
-	bool patro_seleccio_terra(int pos_i_deixar, int pos_j_deixar, int i, int j) const;
-	bool patro_seleccio_eter(int pos_i_deixar, int pos_j_deixar, int i, int j) const;
+	// PER CANVIAR
+	bool patro_seleccio_vent(int pos_i_agafar, int pos_j_agafar, int pos_i_deixar, int pos_j_deixar) const;
+	bool patro_seleccio_terra(int pos_i_agafar, int pos_j_agafar, int pos_i_deixar, int pos_j_deixar) const;
+	bool patro_seleccio_eter(int pos_i_deixar, int pos_j_deixar, int pos_i_agafar, int pos_j_agafar) const;
 };
 #endif // !TAULER_H
 

@@ -1,5 +1,6 @@
 #include "Tauler.h"
 #include <iostream>
+#include <math.h>
 #include <iomanip>
 using namespace std;
 
@@ -124,97 +125,70 @@ bool Tauler::es_buida_posicio_sender(char sender, int pos_i) const
 }
 bool Tauler::es_jugada_valida(char sender, int pos_fitxa_sender, int pos_i_deixar, int pos_j_deixar, int pos_i_agafar, int pos_j_agafar) const
 {
-	return
-		not es_buida_posicio_muntanya(pos_i_agafar, pos_j_agafar) and
-		not es_buida_posicio_sender(sender, pos_fitxa_sender) and
-		coincideixen_sender_muntanya(sender, pos_fitxa_sender, pos_i_deixar, pos_j_deixar) and
-		es_valid_patro_seleccio(sender, pos_fitxa_sender, pos_i_deixar, pos_j_deixar, pos_i_agafar, pos_j_agafar);
+	bool es_valida = true;
+	if (es_buida_posicio_muntanya(pos_i_agafar, pos_j_agafar)) es_valida = false;
+	else if (es_buida_posicio_sender(sender, pos_fitxa_sender)) es_valida = false;
+	else if (not coincideixen_sender_muntanya(sender, pos_fitxa_sender, pos_i_deixar, pos_j_deixar)) es_valida = false;
+	else if (not es_valid_patro_seleccio(sender, pos_fitxa_sender, pos_i_deixar, pos_j_deixar, pos_i_agafar, pos_j_agafar)) es_valida = false;
+	if (es_valida) cout << "LA JUGADA ES VALIDA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << endl;
+	return es_valida;
+
 }
 bool Tauler::es_valid_patro_seleccio(char sender, int pos_fitxa_sender, int pos_i_deixar, int pos_j_deixar, int pos_i_agafar, int pos_j_agafar) const
 {
 	bool patro_seleccio_correcte = false;
+	char tipus_fitxa = ' ';
+	int distancia_i = abs(pos_i_deixar - pos_i_agafar);
+	int distancia_j = abs(pos_j_deixar - pos_j_agafar);
 
 	if (sender == 'h')
 	{
-		if (a_sender_h[pos_fitxa_sender].tipus_element() == 'a') 
-			patro_seleccio_correcte = patro_seleccio_aigua(pos_i_deixar, pos_j_deixar, pos_i_agafar, pos_j_agafar);
-		else if (a_sender_h[pos_fitxa_sender].tipus_element() == 'e')
-			patro_seleccio_correcte = patro_seleccio_eter(pos_i_deixar, pos_j_deixar, pos_i_agafar, pos_j_agafar);
-		else if (a_sender_h[pos_fitxa_sender].tipus_element() == 'f')
-			patro_seleccio_correcte = patro_seleccio_foc(pos_i_deixar, pos_j_deixar, pos_i_agafar, pos_j_agafar);
-		else if (a_sender_h[pos_fitxa_sender].tipus_element() == 't')
-			patro_seleccio_correcte = patro_seleccio_terra(pos_i_deixar, pos_j_deixar, pos_i_agafar, pos_j_agafar);
-		else if (a_sender_h[pos_fitxa_sender].tipus_element() == 'v')
-			patro_seleccio_correcte = patro_seleccio_vent(pos_i_deixar, pos_j_deixar, pos_i_agafar, pos_j_agafar);
+		if (pos_fitxa_sender == pos_j_deixar)
+			tipus_fitxa = a_sender_h[pos_fitxa_sender].tipus_element();
 	}
 	else
 	{
-		if (a_sender_h[pos_fitxa_sender].tipus_element() == 'a')
-			patro_seleccio_correcte = patro_seleccio_aigua(pos_i_deixar, pos_j_deixar, pos_i_agafar, pos_j_agafar);
-		else if (a_sender_h[pos_fitxa_sender].tipus_element() == 'e')
-			patro_seleccio_correcte = patro_seleccio_eter(pos_i_deixar, pos_j_deixar, pos_i_agafar, pos_j_agafar);
-		else if (a_sender_h[pos_fitxa_sender].tipus_element() == 'f')
-			patro_seleccio_correcte = patro_seleccio_foc(pos_i_deixar, pos_j_deixar, pos_i_agafar, pos_j_agafar);
-		else if (a_sender_h[pos_fitxa_sender].tipus_element() == 't')
-			patro_seleccio_correcte = patro_seleccio_terra(pos_i_deixar, pos_j_deixar, pos_i_agafar, pos_j_agafar);
-		else if (a_sender_h[pos_fitxa_sender].tipus_element() == 'v')
-			patro_seleccio_correcte = patro_seleccio_vent(pos_i_deixar, pos_j_deixar, pos_i_agafar, pos_j_agafar);
+		if (pos_fitxa_sender == pos_i_deixar)
+			tipus_fitxa = a_sender_v[pos_fitxa_sender].tipus_element();
 	}
+
+	if (tipus_fitxa == 'a') patro_seleccio_correcte = patro_seleccio_aigua(pos_i_agafar, pos_i_deixar, distancia_j);
+	else if (tipus_fitxa == 'f') patro_seleccio_correcte = patro_seleccio_foc(pos_j_agafar, pos_j_deixar, distancia_i);
+	else if (tipus_fitxa == 'e') patro_seleccio_correcte = patro_seleccio_eter(pos_i_agafar, pos_j_agafar, pos_i_deixar, pos_j_deixar);
+	else if (tipus_fitxa == 't') patro_seleccio_correcte = patro_seleccio_terra(pos_i_agafar, pos_j_agafar, pos_i_deixar, pos_j_deixar);
+	else if (tipus_fitxa == 'v') patro_seleccio_correcte = patro_seleccio_vent(pos_i_agafar, pos_j_agafar, pos_i_deixar, pos_j_deixar);
 	return patro_seleccio_correcte;
 }
 // patrons de seleccio
-bool Tauler::patro_seleccio_aigua(int i, int j, int pos_i_agafar, int pos_j_agafar) const
+bool Tauler::patro_seleccio_aigua(int pos_i_agafar, int pos_i_deixar, int distancia_j) const
 {
-	// pos on deixem: i,j
-	bool trobat = false;
-	int n = -2;
-	while (not existeix_posicio_muntanya(i, j + n) and j + n != pos_j_agafar and not trobat and n < 2)
-	{
-		if ((existeix_posicio_muntanya(i, j + n) and j + n == pos_j_agafar and n <=2)) trobat = true;
-		else n++;
-	}
-	return trobat;
+	return pos_i_agafar == pos_i_deixar and (distancia_j == 1 or distancia_j == 2);
 }
-bool Tauler::patro_seleccio_eter(int i, int j, int pos_i_agafar, int pos_j_agafar) const
+bool Tauler::patro_seleccio_foc(int pos_j_agafar, int pos_j_deixar, int distancia_i) const
 {
-	bool trobat = false;
-	if (existeix_posicio_muntanya(i - 1, j - 1) and i - 1 == pos_i_agafar and j - 1 == pos_j_agafar) trobat = true;
-	else if (existeix_posicio_muntanya(i - 1, j + 1) and i - 1 == pos_i_agafar and j + 1 == pos_j_agafar) trobat = true;
-	else if (existeix_posicio_muntanya(i + 1, j - 1) and i + 1 == pos_i_agafar and j - 1 == pos_j_agafar) trobat = true;
-	else if (existeix_posicio_muntanya(i + 1, j + 1) and i + 1 == pos_i_agafar and j + 1 == pos_j_agafar) trobat = true;
-	return trobat;
+	return pos_j_deixar == pos_j_agafar and (distancia_i == 1 or distancia_i == 2);
 }
-bool Tauler::patro_seleccio_terra(int i, int j, int pos_i_agafar, int pos_j_agafar) const
+bool Tauler::patro_seleccio_eter(int pos_i_agafar, int pos_j_agafar, int pos_i_deixar, int pos_j_deixar) const
 {
-	bool trobat = false;
-	if (existeix_posicio_muntanya(i-1, j-1) and i-1 == pos_i_agafar and j-1 == pos_j_agafar) trobat = true;
-	else if (existeix_posicio_muntanya(i - 1, j) and i - 1 == pos_i_agafar and j == pos_j_agafar) trobat = true;
-	else if (existeix_posicio_muntanya(i - 1, j+1) and i - 1 == pos_i_agafar and j == pos_j_agafar) trobat = true;
-	else if (existeix_posicio_muntanya(i, j - 1) and i == pos_i_agafar and j - 1== pos_j_agafar) trobat = true;
-	else if (existeix_posicio_muntanya(i, j + 1) and i == pos_i_agafar and j + 1== pos_j_agafar) trobat = true;
-	else if (existeix_posicio_muntanya(i+1, j-1) and i + 1 == pos_i_agafar and j - 1 == pos_j_agafar) trobat = true;
-	else if (existeix_posicio_muntanya(i+1, j) and i + 1 == pos_i_agafar and j == pos_j_agafar) trobat = true;
-	else if (existeix_posicio_muntanya(i+1, j+1) and i + 1 == pos_i_agafar and j + 1 == pos_j_agafar) trobat = true;
-	return trobat;
+	return 
+		pos_i_deixar - 1 == pos_i_agafar and pos_j_deixar - 1 == pos_j_agafar or
+		pos_i_deixar + 1 == pos_i_agafar and pos_j_deixar + 1 == pos_j_agafar or
+		pos_i_deixar + 1 == pos_i_agafar and pos_j_deixar - 1 == pos_j_agafar or
+		pos_i_deixar - 1 == pos_i_agafar and pos_j_deixar + 1 == pos_j_agafar;
 }
-bool Tauler::patro_seleccio_foc(int i, int j, int pos_i_agafar, int pos_j_agafar) const
+bool Tauler::patro_seleccio_terra(int pos_i_agafar, int pos_j_agafar, int pos_i_deixar, int pos_j_deixar) const
 {
-	bool trobat = false;
-	if (existeix_posicio_muntanya(i - 2, j) and i - 2 == pos_i_agafar and j == pos_j_agafar) trobat = true;
-	else if (existeix_posicio_muntanya(i - 1, j) and i - 1 == pos_i_agafar and j == pos_j_agafar) trobat = true;
-	else if (existeix_posicio_muntanya(i + 1, j) and i + 1 == pos_i_agafar and j == pos_j_agafar) trobat = true;
-	else if (existeix_posicio_muntanya(i + 2, j) and i + 2 == pos_i_agafar and j == pos_j_agafar) trobat = true;
-	return trobat;
+	return patro_seleccio_eter(pos_i_agafar, pos_j_agafar, pos_i_deixar, pos_j_deixar) or patro_seleccio_vent(pos_i_agafar, pos_j_agafar, pos_i_deixar, pos_j_deixar);
 }
-bool Tauler::patro_seleccio_vent(int i, int j, int pos_i_agafar, int pos_j_agafar) const
+bool Tauler::patro_seleccio_vent(int pos_i_agafar, int pos_j_agafar, int pos_i_deixar, int pos_j_deixar) const
 {
-	bool trobat = false;
-	if (existeix_posicio_muntanya(i - 1, j) and i - 1 == pos_i_agafar and j == pos_j_agafar) trobat = true;
-	else if (existeix_posicio_muntanya(i, j-1) and i == pos_i_agafar and j-1 == pos_j_agafar) trobat = true;
-	else if (existeix_posicio_muntanya(i, j+1) and i == pos_i_agafar and j+1 == pos_j_agafar) trobat = true;
-	else if (existeix_posicio_muntanya(i+1, j) and i+1 == pos_i_agafar and j == pos_j_agafar) trobat = true;
-	return trobat;
+	return
+	pos_i_deixar - 1 == pos_i_agafar and pos_j_deixar == pos_j_agafar or
+	pos_i_deixar + 1 == pos_i_agafar and pos_j_deixar == pos_j_agafar or
+	pos_i_deixar == pos_i_agafar and pos_j_deixar - 1 == pos_j_agafar or
+	pos_i_deixar == pos_i_agafar and pos_j_deixar + 1 == pos_j_agafar;
 }
+
 bool Tauler::coincideixen_sender_muntanya(char sender, int pos_sender, int pos_i_deixar, int pos_j_deixar) const
 {
 	bool concorden_posicions = false;
@@ -248,4 +222,4 @@ void Tauler::allibera_sender(char tipus_sender)
 {
 	if (tipus_sender == 'h') delete[] a_sender_h;
 	else if (tipus_sender == 'v') delete[] a_sender_v;
-}
+}   
