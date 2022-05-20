@@ -30,14 +30,14 @@ class Joc
 		bool validar_posicions_muntanya(int pos_i, int pos_j) const;
 		bool validar_posicio_sender(int pos_i) const;
 		bool validar_tipus_sender(char sender) const;
-
+		bool validar_jugada(char sender, int pos_fitxa_sender, int pos_i_deixar, int pos_j_deixar, int pos_i_agafar, int pos_j_agafar) const;
 		// METODES MODIFICADORS
 		void inicialitzar_partida();
 		void canvi_estacio();
 		void incrementa_torn(char opcio);
 		void posar_fitxa_muntanya();
 		void intercanvi_gorinto_amb_sender();
-
+		void realitzar_jugada(char sender, int pos_fitxa_sender, int pos_i_deixar, int pos_j_deixar, int pos_i_agafar, int pos_j_agafar);
 	private:
 		// ATRIBUTS
 		Bossa a_bossa;
@@ -57,5 +57,8 @@ class Joc
 		void emplenar_tauler();
 		void emplenar_sender(char tipus_sender);
 		void emplenar_nivell(int inici, int final);
+
+		bool comprovar_concordancia_sender_muntanya(char sender, int pos_sender, int pos_i_deixar, int pos_j_deixar);
+
 };
 #endif // !JOC_H

@@ -67,6 +67,7 @@ int Joc::estacions() const
 {
 	return this->a_estaico;
 }
+
 // METODES BOOLEANS
 bool Joc::es_final_partida() const
 {
@@ -196,3 +197,4 @@ void Joc::emplenar_nivell(int inici, int final)
 		}
 	}
 }
+

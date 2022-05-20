@@ -51,6 +51,10 @@ bool Fitxa::es_nula() const
 {
 	return a_tipus == ' ' and a_valor == 0;
 }
+char Fitxa::tipus_element() const
+{
+	return a_tipus;
+}
 // METODES MODIFICADORS
 void Fitxa::llegeix()
 {

@@ -19,41 +19,8 @@
 #include "Joc.h"
 using namespace std;
 
-// ACCIONS I FUNCIONS
-void COUTS()
-{
-	// Variables
-	int numero_de_jugador, estacions, torns;
-
-	// COUTs
-	// cout << "ENTRA LA LLAVOR:" << endl;
-	// cout << "ENTRA EL NUMERO DE JUGADORS:" << endl;
-	// cout << "ENTRA EL NOM DEL JUGADOR " << numero_de_jugador << ":" << endl;
-	// cout << endl << "OPCIONS:" << endl;
-	// cout << "(I) FER JUGADA AMB INTERCANVI PREVI" << endl;
-	// cout << "(J) FER JUGADA SENSE INTERCANVI PREVI" << endl;
-	// cout << "(D) MOSTRAR DISPENSADOR" << endl;
-	// cout << "(P) MOSTRAR UNA PILA DE LA MUNTANYA" << endl;
-	// cout << "(F) ABANDONAR LA PARTIDA" << endl;
-	// cout << endl << "ENTRAR OPCIO:" << endl;
-	cout << "OPCIO NO DEFINIDA" << endl;
-	cout << "SENDER DEL QUAL VOLS AGAFAR LA FITXA:" << endl;
-	cout << "SENDER NO VALID" << endl;
-	cout << "POSICIO DE LA FITXA EN EL SENDER:" << endl;
-	cout << "POSICIO DE LA MUNTANYA ON VOLS DEIXAR UNA FITXA:" << endl;
-	cout << "POSICIO DE LA MUNTANYA ON VOLS AGAFAR UNA FITXA:" << endl;
-	cout << "POSICIO NO VALIDA" << endl;
-	cout << "NO POTS FER INTERCANVI, NO TENS FITXES EN EL TEU GORINTO" << endl;
-	cout << "ENTRA LA FITXA QUE VOLS INTERCANVIAR:" << endl;
-	cout << "ENTRA LA FITXA QUE VOLS OBTENIR:" << endl;
-	cout << "INTERCANVI NO VALID" << endl;
-	cout << "DADES DE LA JUGADA QUE VOLS FER:" << endl;
-	cout << "JUGADA NO PERMESA" << endl;
-	cout << "POSICIO DE LA PILA:" << endl;
-	cout << "POSICIO NO VALIDA" << endl;
-	/*cout << endl << "PARTIDA ABANDONADA DESPRES DE " << estacions << " ESTACIONS I " << torns << " TORNS" << endl;
-	cout << endl << "PARTIDA ACABADA DESPRES DE " << estacions << "	ESTACIONS I " << torns << " TORNS" << endl;*/
-}
+// ------------------------ ACCIONS I FUNCIONS ------------------------- 
+// INTRODUCCIO DE PARAMETRES PER PREPARAR LA PARTIDA
 int introduir_llavor()
 {
 	cout << "ENTRA LA LLAVOR:" << endl;
@@ -85,54 +52,59 @@ string* introduir_noms_jugadors(int n)
 	return noms;
 }
 
-void mostrar_menu()
-{
-	// Pre: --;
-	// Post: mostra el menu per pantalla
-	cout << endl << "OPCIONS:" << endl;
-	cout << "(I) FER JUGADA AMB INTERCANVI PREVI" << endl;
-	cout << "(J) FER JUGADA SENSE INTERCANVI PREVI" << endl;
-	cout << "(D) MOSTRAR DISPENSADOR" << endl;
-	cout << "(P) MOSTRAR UNA PILA DE LA MUNTANYA" << endl;
-	cout << "(F) ABANDONAR LA PARTIDA" << endl;
-}
-// OPCIO I
 void jugada_amb_intercanvi(Joc& joc)
 {
 
 }
-// OPCIO J
-void jugada_sense_intercanvi(Joc& joc)
+
+char introduir_sender(const Joc& joc)
 {
+	// Pre:
+	// Post:
 	cout << "DADES DE LA JUGADA QUE VOLS FER:" << endl;
 	cout << "SENDER DEL QUAL VOLS AGAFAR LA FITXA:" << endl;
-	char sender; cin >> sender; 
+	char sender; cin >> sender;
 	while (not joc.validar_tipus_sender(sender))
 	{
 		cout << "SENDER NO VALID" << endl;
 		cout << "SENDER DEL QUAL VOLS AGAFAR LA FITXA:" << endl;
 		cin >> sender;
 	}
-
+	return sender;
+}
+int introduir_pos_sender(const Joc& joc)
+{
+	// Pre:
+	// Post:
 	cout << "POSICIO DE LA FITXA EN EL SENDER:" << endl;
-	int pos_fitxa_sender; cin >> pos_fitxa_sender; 
+	int pos_fitxa_sender; cin >> pos_fitxa_sender;
 	while (joc.validar_posicio_sender(pos_fitxa_sender))
 	{
 		cout << "POSICIO NO VALIDA" << endl;
 		cout << "POSICIO DE LA FITXA EN EL SENDER:" << endl;
 		cin >> pos_fitxa_sender;
 	}
-
+	return pos_fitxa_sender;
+}
+void introduir_posicio_muntanya_deixar(const Joc& joc, int& pos_i_deixar, int& pos_j_deixar)
+{
+	// Pre:
+	// Post:
 	cout << "POSICIO DE LA MUNTANYA ON VOLS DEIXAR UNA FITXA:" << endl;
-	int pos_i_deixar, pos_j_deixar; cin >> pos_i_deixar >> pos_j_deixar;
+	cin >> pos_i_deixar >> pos_j_deixar;
 	while (not joc.validar_posicions_muntanya(pos_i_deixar, pos_j_deixar))
 	{
 		cout << "POSICIO NO VALIDA" << endl;
 		cout << "POSICIO DE LA MUNTANYA ON VOLS DEIXAR UNA FITXA:" << endl;
 		cin >> pos_i_deixar >> pos_j_deixar;
 	}
+}
+void introduir_posicio_muntanya_agafar(const Joc& joc, int& pos_i_agafar, int& pos_j_agafar, const int pos_i_deixar, const int pos_j_deixar)
+{
+	// Pre:
+	// Post:
 	cout << "POSICIO DE LA MUNTANYA ON VOLS AGAFAR UNA FITXA:" << endl;
-	int pos_i_agafar, pos_j_agafar; cin >> pos_i_agafar >> pos_j_agafar; // COMPROVAR POS -> RANG MAT I TAULA
+	cin >> pos_i_agafar >> pos_j_agafar; // COMPROVAR POS -> RANG MAT I TAULA
 	while (not joc.validar_posicions_muntanya(pos_i_agafar, pos_j_agafar) and pos_i_agafar != pos_i_deixar and pos_j_agafar != pos_j_deixar)
 	{
 		cout << "POSICIO NO VALIDA" << endl;
@@ -141,8 +113,21 @@ void jugada_sense_intercanvi(Joc& joc)
 	}
 }
 
-// OPCIO D IMLEMENTADA DIRECTAMENT
-// OPCIO P
+void jugada_sense_intercanvi(Joc& joc)
+{
+	// INTRODUCCIO I VALIDACIO DE DADES
+	char sender = introduir_sender(joc);
+	int pos_fitxa_sender = introduir_pos_sender(joc);
+	int pos_i_deixar, pos_j_deixar;
+	int pos_i_agafar, pos_j_agafar;
+	introduir_posicio_muntanya_deixar(joc, pos_i_deixar, pos_j_deixar);
+	introduir_posicio_muntanya_agafar(joc, pos_i_agafar, pos_j_agafar, pos_i_deixar, pos_j_deixar);
+	// VALIDACIO DE JUGADA
+
+	/*if (not jugada_valida))	cout << "JUGADA NO PERMESA" << endl;
+	else joc.realitzar_jugada(sender, pos_fitxa_sender, pos_i_deixar, pos_j_deixar, pos_i_agafar, pos_j_agafar);*/
+}
+
 void comprovar_dades(int& i, int& j, const Joc& joc)
 {
 	bool dades_valides = joc.validar_posicions_muntanya(i, j);
@@ -173,7 +158,19 @@ char demanar_opcio()
 	if (not validar_opcio(opcio)) cout << "OPCIO NO DEFINIDA" << endl;
 	return opcio;
 }
-// MAIN
+
+void mostrar_menu()
+{
+	// Pre: --;
+	// Post: mostra el menu per pantalla
+	cout << endl << "OPCIONS:" << endl;
+	cout << "(I) FER JUGADA AMB INTERCANVI PREVI" << endl;
+	cout << "(J) FER JUGADA SENSE INTERCANVI PREVI" << endl;
+	cout << "(D) MOSTRAR DISPENSADOR" << endl;
+	cout << "(P) MOSTRAR UNA PILA DE LA MUNTANYA" << endl;
+	cout << "(F) ABANDONAR LA PARTIDA" << endl;
+}
+
 int main()
 {
 	// INCIALITZEM LES VARIABLES

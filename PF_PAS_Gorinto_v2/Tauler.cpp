@@ -63,7 +63,7 @@ void Tauler::mostrar() const
 	cout << setfill(' ') << setw(6) << ' ';
 	for (int i = 0; i < a_mida; i++)
 	{
-		cout << setfill(' ') << setw(6) << i;
+cout << setfill(' ') << setw(6) << i;
 	}
 	cout << endl;
 	cout << setfill(' ') << setw(8) << ' ';
@@ -110,6 +110,111 @@ bool Tauler::existeix_posicio_muntanya(int pos_i, int pos_j) const
 bool Tauler::existeix_posicio_sender(int pos_i) const
 {
 	return pos_i >= 0 and pos_i <= a_mida;
+}
+bool Tauler::es_buida_posicio_muntanya(int pos_i, int pos_j) const
+{
+	return a_muntanya[pos_i][pos_j].es_buida();
+}
+bool Tauler::es_buida_posicio_sender(char sender, int pos_i) const
+{
+	bool es_buida = false;
+	if (sender == 'h') es_buida = a_sender_h[pos_i].es_nula();
+	else es_buida = a_sender_v[pos_i].es_nula();
+	return es_buida;
+}
+bool Tauler::es_jugada_valida(char sender, int pos_fitxa_sender, int pos_i_deixar, int pos_j_deixar, int pos_i_agafar, int pos_j_agafar) const
+{
+	return
+		not es_buida_posicio_muntanya(pos_i_agafar, pos_j_agafar) and
+		not es_buida_posicio_sender(sender, pos_fitxa_sender) and
+		coincideixen_sender_muntanya(sender, pos_fitxa_sender, pos_i_deixar, pos_j_deixar) and
+		es_valid_patro_seleccio(sender, pos_fitxa_sender, pos_i_deixar, pos_j_deixar, pos_i_agafar, pos_j_agafar);
+}
+bool Tauler::es_valid_patro_seleccio(char sender, int pos_fitxa_sender, int pos_i_deixar, int pos_j_deixar, int pos_i_agafar, int pos_j_agafar) const
+{
+	bool patro_seleccio_correcte = false;
+
+	if (sender == 'h')
+	{
+		if (a_sender_h[pos_fitxa_sender].tipus_element() == 'a')
+		{
+
+		}
+	}
+	/*
+	else if (a_sender_h[pos_fitxa_sender].tipus_element() == 'e')
+	else if (a_sender_h[pos_fitxa_sender].tipus_element() == 'f')
+	else if (a_sender_h[pos_fitxa_sender].tipus_element() == 't')
+	else if (a_sender_h[pos_fitxa_sender].tipus_element() == 'v')
+}
+else
+{
+	if (a_sender_h[pos_fitxa_sender].tipus_element() == 'a')
+	else if (a_sender_v[pos_fitxa_sender].tipus_element() == 'e')
+	else if (a_sender_v[pos_fitxa_sender].tipus_element() == 'f')
+	else if (a_sender_v[pos_fitxa_sender].tipus_element() == 't')
+	else if (a_sender_v[pos_fitxa_sender].tipus_element() == 'v')
+}*/
+	return patro_seleccio_correcte;
+}
+bool Tauler::patro_seleccio_aigua(int i, int j, int pos_i_agafar, int pos_j_agafar) const
+{
+	// pos on deixem: i,j
+	bool trobat = false;
+	int n = -2;
+	while (not existeix_posicio_muntanya(i, j + n) and j + n != pos_j_agafar and not trobat and n < 2)
+	{
+		if ((existeix_posicio_muntanya(i, j + n) and j + n == pos_j_agafar and n <=2)) trobat = true;
+		else n++;
+	}
+	return trobat;
+}
+bool Tauler::patro_seleccio_eter(int i, int j, int pos_i_agafar, int pos_j_agafar) const
+{
+	bool trobat = false;
+	if (existeix_posicio_muntanya(i - 1, j - 1) and i - 1 == pos_i_agafar and j - 1 == pos_j_agafar) trobat = true;
+	else if (existeix_posicio_muntanya(i - 1, j + 1) and i - 1 == pos_i_agafar and j + 1 == pos_j_agafar) trobat = true;
+	else if (existeix_posicio_muntanya(i + 1, j - 1) and i + 1 == pos_i_agafar and j - 1 == pos_j_agafar) trobat = true;
+	else if (existeix_posicio_muntanya(i + 1, j + 1) and i + 1 == pos_i_agafar and j + 1 == pos_j_agafar) trobat = true;
+	return trobat;
+}
+bool Tauler::patro_seleccio_terra(int i, int j, int pos_i_agafar, int pos_j_agafar) const
+{
+	bool trobat = false;
+	if (existeix_posicio_muntanya(i-1, j-1) and i-1 == pos_i_agafar and j-1 == pos_j_agafar) trobat = true;
+	else if (existeix_posicio_muntanya(i - 1, j) and i - 1 == pos_i_agafar and j == pos_j_agafar) trobat = true;
+	else if (existeix_posicio_muntanya(i - 1, j+1) and i - 1 == pos_i_agafar and j == pos_j_agafar) trobat = true;
+	else if (existeix_posicio_muntanya(i, j - 1) and i == pos_i_agafar and j - 1== pos_j_agafar) trobat = true;
+	else if (existeix_posicio_muntanya(i, j + 1) and i == pos_i_agafar and j + 1== pos_j_agafar) trobat = true;
+	else if (existeix_posicio_muntanya(i+1, j-1) and i + 1 == pos_i_agafar and j - 1 == pos_j_agafar) trobat = true;
+	else if (existeix_posicio_muntanya(i+1, j) and i + 1 == pos_i_agafar and j == pos_j_agafar) trobat = true;
+	else if (existeix_posicio_muntanya(i+1, j+1) and i + 1 == pos_i_agafar and j + 1 == pos_j_agafar) trobat = true;
+	return trobat;
+}
+bool Tauler::patro_seleccio_foc(int i, int j, int pos_i_agafar, int pos_j_agafar) const
+{
+	bool trobat = false;
+	if (existeix_posicio_muntanya(i - 2, j) and i - 2 == pos_i_agafar and j == pos_j_agafar) trobat = true;
+	else if (existeix_posicio_muntanya(i - 1, j) and i - 1 == pos_i_agafar and j == pos_j_agafar) trobat = true;
+	else if (existeix_posicio_muntanya(i + 1, j) and i + 1 == pos_i_agafar and j == pos_j_agafar) trobat = true;
+	else if (existeix_posicio_muntanya(i + 2, j) and i + 2 == pos_i_agafar and j == pos_j_agafar) trobat = true;
+	return trobat;
+}
+bool Tauler::patro_seleccio_vent(int i, int j, int pos_i_agafar, int pos_j_agafar) const
+{
+	bool trobat = false;
+	if (existeix_posicio_muntanya(i - 1, j) and i - 1 == pos_i_agafar and j == pos_j_agafar) trobat = true;
+	else if (existeix_posicio_muntanya(i, j-1) and i == pos_i_agafar and j-1 == pos_j_agafar) trobat = true;
+	else if (existeix_posicio_muntanya(i, j+1) and i == pos_i_agafar and j+1 == pos_j_agafar) trobat = true;
+	else if (existeix_posicio_muntanya(i+1, j) and i+1 == pos_i_agafar and j == pos_j_agafar) trobat = true;
+	return trobat;
+}
+bool Tauler::coincideixen_sender_muntanya(char sender, int pos_sender, int pos_i_deixar, int pos_j_deixar) const
+{
+	bool concorden_posicions = false;
+	if (sender == 'h') concorden_posicions = pos_sender == pos_j_deixar;
+	else concorden_posicions = pos_sender == pos_i_deixar;
+	return concorden_posicions;
 }
 // METODES PRIVATS
 void Tauler::copia(const Tauler& o)

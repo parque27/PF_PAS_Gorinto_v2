@@ -19,9 +19,17 @@ public:
 	// METODES MOSTRATIUS
 	void mostrar() const;
 	void mostrar_pila(int i, int j) const;
+
 	// METODES BOOLEANS
 	bool existeix_posicio_muntanya(int i, int j) const;
 	bool existeix_posicio_sender(int i) const;
+
+	bool es_buida_posicio_muntanya(int i, int j) const;
+	bool es_buida_posicio_sender(char sender, int i) const;
+
+	bool es_jugada_valida(char sender, int pos_fitxa_sender, int pos_i_deixar, int pos_j_deixar, int pos_i_agafar, int pos_j_agafar) const;
+	bool es_valid_patro_seleccio(char sender, int pos_fitxa_sender, int pos_i_deixar, int pos_j_deixar, int pos_i_agafar, int pos_j_agafar) const;
+	bool coincideixen_sender_muntanya(char sender, int pos_sender, int pos_i_deixar, int pos_j_deixar) const;
 
 	// METODES MODIFICADORS
 	void posar_fitxa(int pos_i, int pos_j, Fitxa f);
@@ -38,6 +46,12 @@ private:
 	void copia(const Tauler& o);
 	void reserva();
 	void allibera();
+
+	bool patro_seleccio_aigua(int pos_i_deixar, int pos_j_deixar, int i, int j) const;
+	bool patro_seleccio_vent(int pos_i_deixar, int pos_j_deixar, int i, int j) const;
+	bool patro_seleccio_foc(int pos_i_deixar, int pos_j_deixar, int i, int j) const;
+	bool patro_seleccio_terra(int pos_i_deixar, int pos_j_deixar, int i, int j) const;
+	bool patro_seleccio_eter(int pos_i_deixar, int pos_j_deixar, int i, int j) const;
 };
 #endif // !TAULER_H
 
