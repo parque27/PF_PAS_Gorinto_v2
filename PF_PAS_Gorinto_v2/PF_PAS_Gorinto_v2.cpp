@@ -9,8 +9,8 @@
     Curs 2021 - 2022
 */
 /*
-    ENTRADA:
-    SORTIDA:
+    ENTRADA: Una llavor, nombre de jugadors, i els seus noms
+    SORTIDA: El joc del GORINTO implementat amb les seves funcions corresponents.
 */
 
 #include <iostream>
@@ -18,20 +18,24 @@
 #include <iomanip>
 #include "Joc.h"
 using namespace std;
-
+const int MIN_JUGADORS = 2;
+const int MAX_JUGADORS = 4;
 // ------------------------ ACCIONS I FUNCIONS ------------------------- 
-// INTRODUCCIO DE PARAMETRES PER PREPARAR LA PARTIDA
 unsigned introduir_llavor()
 {
+	// Pre:
+	// Post: retorna la llavor introduida per teclat
 	cout << "ENTRA LA LLAVOR:" << endl;
 	unsigned llavor; cin >> llavor;
 	return llavor;
 }
 int introduir_n_jugadors()
 {
+	// Pre:
+	// Post: retorna el nombre de jugadors de la partida
 	cout << "ENTRA EL NUMERO DE JUGADORS:" << endl;
 	int n; cin >> n;
-	while (n < 2 or n > 4) // TODO: Canviar a constants
+	while (n < MIN_JUGADORS or n > MAX_JUGADORS) // TODO: Canviar a constants
 	{
 		cout << "ENTRA EL NUMERO DE JUGADORS:" << endl;
 		cin >> n;
@@ -40,6 +44,8 @@ int introduir_n_jugadors()
 }
 string* introduir_noms_jugadors(int n)
 {
+	// Pre: MIN_JUGADORS <= n <= MAX_JUGADORS
+	// Post: retorna un punter a un array de noms
 	string* noms = new string[n];
 	cin.ignore(numeric_limits<streamsize>::max(), '\n');
 	for (int i = 0; i < n; i++)
@@ -53,12 +59,12 @@ string* introduir_noms_jugadors(int n)
 }
 void jugada_amb_intercanvi(Joc& joc)
 {
-
+	// NO IMPLEMENTADA
 }
 char introduir_sender(const Joc& joc)
 {
 	// Pre:
-	// Post:
+	// Post: retorna el caracter corresponent al sender
 	cout << "DADES DE LA JUGADA QUE VOLS FER:" << endl;
 	cout << "SENDER DEL QUAL VOLS AGAFAR LA FITXA:" << endl;
 	char sender; cin >> sender;
@@ -72,8 +78,8 @@ char introduir_sender(const Joc& joc)
 }
 int introduir_pos_sender(const Joc& joc)
 {
-	// Pre:
-	// Post:
+	// Pre: --
+	// Post: retorna la posicio del sender
 	cout << "POSICIO DE LA FITXA EN EL SENDER:" << endl;
 	int pos_fitxa_sender; cin >> pos_fitxa_sender;
 	while (not joc.validar_posicio_sender(pos_fitxa_sender))
@@ -84,17 +90,10 @@ int introduir_pos_sender(const Joc& joc)
 	}
 	return pos_fitxa_sender;
 }
-void debug_mostrar_dades_jugada(char sender, int pos_fitxa_sender, int pos_i_deixar, int pos_j_deixar, int pos_i_agafar, int pos_j_agafar)
-{
-	cout << "SENDER: [" << sender << "]" << endl;
-	cout << "POSICIO SENDER: [" << pos_fitxa_sender << "]" << endl;
-	cout << "FITXA QUE DEIXEM: " << pos_i_deixar << "," << pos_j_deixar << endl;
-	cout << "FITXA QUE AGAFEM: " << pos_i_agafar << "," << pos_j_agafar << endl;
-}
 void introduir_posicio_muntanya_deixar(const Joc& joc, int& pos_i_deixar, int& pos_j_deixar)
 {
 	// Pre:
-	// Post:
+	// Post: s'ha introduit les posicions i,j de les fitxes que es treuen
 	cout << "POSICIO DE LA MUNTANYA ON VOLS DEIXAR UNA FITXA:" << endl;
 	cin >> pos_i_deixar >> pos_j_deixar;
 	while (not joc.validar_posicions_muntanya(pos_i_deixar, pos_j_deixar))
@@ -107,7 +106,7 @@ void introduir_posicio_muntanya_deixar(const Joc& joc, int& pos_i_deixar, int& p
 void introduir_posicio_muntanya_agafar(const Joc& joc, int& pos_i_agafar, int& pos_j_agafar, const int pos_i_deixar, const int pos_j_deixar)
 {
 	// Pre:
-	// Post:
+	// Post: s'ha introduit les posicions i,j de les fitxes que s'agafen
 	cout << "POSICIO DE LA MUNTANYA ON VOLS AGAFAR UNA FITXA:" << endl;
 	cin >> pos_i_agafar >> pos_j_agafar; // COMPROVAR POS -> RANG MAT I TAULA
 	while (not joc.validar_posicions_muntanya(pos_i_agafar, pos_j_agafar) and pos_i_agafar != pos_i_deixar and pos_j_agafar != pos_j_deixar)
@@ -119,6 +118,8 @@ void introduir_posicio_muntanya_agafar(const Joc& joc, int& pos_i_agafar, int& p
 }
 void jugada_sense_intercanvi(Joc& joc)
 {
+	// Pre: 
+	// Post: realitza una jugada sense intercanvi previ
 	// INTRODUCCIO I VALIDACIO DE DADES
 	char sender = introduir_sender(joc);
 	int pos_fitxa_sender = introduir_pos_sender(joc);
@@ -139,6 +140,8 @@ void jugada_sense_intercanvi(Joc& joc)
 }
 void comprovar_dades(int& i, int& j, const Joc& joc)
 {
+	// Pre:
+	// Post: les dades de la pila que es troba a i,j son correctes
 	bool dades_valides = joc.validar_posicions_muntanya(i, j);
 	while (not dades_valides)
 	{
@@ -149,6 +152,8 @@ void comprovar_dades(int& i, int& j, const Joc& joc)
 }
 void mostrar_pila_muntanya(const Joc& joc)
 {
+	// Pre:
+	// Post: mostra la pila per patnalla
 	cout << "POSICIO DE LA PILA:" << endl;
 	int pos_i, pos_j; cin >> pos_i >> pos_j;
 	comprovar_dades(pos_i, pos_j, joc);
@@ -156,7 +161,9 @@ void mostrar_pila_muntanya(const Joc& joc)
 }
 bool validar_opcio(const char o)
 {
-	return o == 'I' or o == 'J' or o == 'D' or o == 'P' or o == 'F' or o == 'T';
+	// Pre: --
+	// Post: retorna true si la opcio o es un dels caracters especificats, fals altrament
+	return o == 'I' or o == 'J' or o == 'D' or o == 'P' or o == 'F';
 }
 char demanar_opcio()
 {
@@ -167,7 +174,6 @@ char demanar_opcio()
 	if (not validar_opcio(opcio)) cout << "OPCIO NO DEFINIDA" << endl;
 	return opcio;
 }
-
 void mostrar_menu()
 {
 	// Pre: --;
@@ -180,28 +186,5 @@ void mostrar_menu()
 	cout << "(F) ABANDONAR LA PARTIDA" << endl;
 }
 
-int main()
-{
-	unsigned llavor = introduir_llavor();
-	int n_jugadors = introduir_n_jugadors();
-	string* nom_jugadors = introduir_noms_jugadors(n_jugadors);
-	Joc joc(llavor, n_jugadors, nom_jugadors);
-	joc.inicialitzar_partida();
-	mostrar_menu();
-	joc.mostrar_estat_actual();
-	char opcio = demanar_opcio();
-	while (opcio != 'F' and not joc.es_final_partida())
-	{
-		if (opcio == 'I') jugada_amb_intercanvi(joc);
-		else if (opcio == 'J') jugada_sense_intercanvi(joc);
-		else if (opcio == 'D') joc.mostrar_dispensador();
-		else if (opcio == 'P') mostrar_pila_muntanya(joc);
-		joc.incrementa_torn(opcio);
-		mostrar_menu();
-		joc.mostrar_estat_actual();
-		opcio = demanar_opcio();
-	}
-	if (opcio == 'F') cout << endl << "PARTIDA ABANDONADA DESPRES DE " << joc.estacions() << " ESTACIONS I " << joc.torns_jugats() << " TORNS" << endl;
-	else if (joc.es_final_partida()) joc.mostrar_resultat_final();
-	return 0;
-}
+// ------------------------------ MAIN -------------------------------- 
+int main()-
